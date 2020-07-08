@@ -2,7 +2,7 @@
 
 ## [[1]. Math Implementation](https://github.com/shinancao/swift-algo/tree/master/%5B1%5D.%20Math%20Implementation)
 
-## [[2]. Algorithm Implementation](https://github.com/shinancao/swift-algo/tree/master/%5B2%5D.%20Algorithm%20Implementation)
+## [[2]. Algorithm Implementation](https://github.com/shinancao/javascript-algo/tree/master/%5B2%5D.%20Algorithm%20Implementation)
 
 ## [[3]. Array](https://github.com/shinancao/swift-algo/tree/master/%5B3%5D.%20Array)
 

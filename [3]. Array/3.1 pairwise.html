@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>2.2 pairwise</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>题目来源：<a href="https://www.freecodecamp.org/learn/coding-interview-prep/algorithms/pairwise">Freecodecamp Algorithms: Pairwise</a></h1>
+  <script>
+    function pairwise(arr, arg) {
+      let sum = 0
+      let pairArr = arr.slice(0)
+      for (let i = 0; i < pairArr.length; i++) {
+        for (let j = i+1; j < pairArr.length; j++) {
+          if (pairArr[i] + pairArr[j] == arg) {
+            sum += (i + j)
+            // 当用js解决数组问题时，如果数组中某个项不再用了，可以使用NaN进行占位！
+            pairArr[i] = pairArr[j] = NaN
+          }
+        }
+      }
+      return sum
+    }
+
+    const res = pairwise([1, 1, 1], 2)
+    console.log(res)
+  </script>
+</body>
+</html>

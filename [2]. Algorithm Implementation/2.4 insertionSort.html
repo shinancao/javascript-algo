@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>2.4 insertion sort</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>插入排序</h1>
+  <ol>
+    <li>算法思想：从数组中依次选择一个元素，放入已排好序的数组中，在实现时不需要真的再建一个数组，
+      通过交换可以让数组前面存储已排好序的部分。</li>
+    <li>时间复杂度：O(n^2)。</li>
+    <li>原地排序。</li>
+  </ol>
+  <script>
+    function swap(array, x, y) {
+      [array[x], array[y]] = [array[y], array[x]]
+    }
+
+    function insertionSort(array) {
+      for(let i = 1; i < array.length; i++) {
+        for(let j = i - 1; j >=0; j--) {
+          if (array[j+1] < array[j]) {
+            swap(array, j, j+1)
+          }
+        }
+      }
+
+      return array
+    }
+
+    console.log(insertionSort([2, 1, 5, 3, 6, 8, 4]))
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>2.3 selection sort</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>选择排序</h1>
+  <ol>
+    <li>算法思想：将数组分成两部分，前部分已经排好序的，后部分是未排序的，
+      j从i+1开始每次从未排序的部分找到最小项，然后和第i项交换。</li>
+    <li>时间复杂度：O(n^2)。</li>
+    <li>原地排序。</li>
+  </ol>
+  <script>
+    function swap(array, x, y) {
+      [array[x], array[y]] = [array[y], array[x]]
+    }
+
+    function selectionSort(array) {
+
+      for(let i = 0; i < array.length; i++) {
+        let min = i
+        for(let j = i + 1; j < array.length; j++) {
+          if (array[min] > array[j]) {
+            min = j
+          }
+        }
+        swap(array, i, min)
+      }
+
+      return array
+    }
+
+    console.log(selectionSort([2, 1, 5, 3, 6, 8, 4]))
+  </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>2.2 bubble sort</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>冒泡排序</h1>
+  <ol>
+    <li>算法思想：每一趟循环逐个比较相邻的两个数，如果前面比后面的大就交换，
+      最后会把最大的数放在数组末尾，下一趟比较会把第2个较大的数放在倒数第2个位置，依次下去。</li>
+    <li>时间复杂度：O(n^2)。</li>
+    <li>原地排序。</li>
+  </ol>
+  <script>
+    function swap(array, x, y) {
+      [array[x], array[y]] = [array[y], array[x]]
+    }
+
+    function bubbleSort(array) {
+      for(let i = 0; i < array.length; i++) {
+        for(let j = 0; j < array.length - 1 - i; j++) {
+          if (array[j] > array[j+1]) {
+            swap(array, j, j+1)
+          }
+        }
+      }
+
+      return array
+    }
+
+    console.log(bubbleSort([2, 1, 5, 3, 6, 8, 4]))
+  </script>
+</body>
+</html>

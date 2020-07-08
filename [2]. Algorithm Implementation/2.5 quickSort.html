@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>2.5 quick sort</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>快速排序</h1>
+  <ol>
+    <li>算法思想：选取一个分区点，分区点左边的小于该分区点，分区点右边的大于该分区点。递归求左右部分。
+      实现的关键点在于求分区点位置的过程：
+      <ol>
+        <li>选right位置的值作为比较参考。</li>
+        <li>定义shift指向待交换的位置。</li>
+        <li>定义i从left扫描到right-1，一旦发现有比pivot小的值，就将shift和i交换，shift再移向下一个待交换位置。</li>
+        <li>最后交互shift和right的值。</li>
+        <li>返回shift，shift即为下次递归的分区点。</li>
+      </ol>
+    </li>
+    <li>平均时间复杂度：O(nlogn)，最坏情况：O(n^2)。</li>
+    <li>原地排序。</li>
+  </ol>
+  <script>
+    function swap(array, x, y) {
+      [array[x], array[y]] = [array[y], array[x]]
+    }
+
+    function quickSort(array, left = 0, right = array.length - 1) {
+      if (left >= right) return
+      const pivotIndex = partition(array, left, right)
+      quickSort(array, left, pivotIndex - 1)
+      quickSort(array, pivotIndex + 1, right)
+    }
+
+    function partition(array, left, right) {
+      const pivot = array[right]
+      let shift = left
+      for(let i = left; i < right; i++) {
+        if (array[i] < pivot) {
+          swap(array, i, shift)
+          shift++
+        }
+      }
+      swap(array, right, shift)
+      return shift
+    }
+    
+    let array = [1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]
+    quickSort(array)
+    console.log(array)
+  </script>
+</body>
+</html>
