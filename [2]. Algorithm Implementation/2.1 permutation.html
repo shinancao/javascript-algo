@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>2.1 permutation</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>实现对数组的全排列</h1>
+  <ol>
+    <li>用递归+插值的方式实现全排列，要对f(n)全排，先取出数组的第一个元素，
+      然后对f(n-1)全排列得到一个二维数组，循环这个二维数组，将刚取出的第一个元素一次插入当前数组的缝隙。</li>
+    <li>用<a href="https://en.wikipedia.org/wiki/Heap%27s_algorithm">Heap's algorithm</a>实现全排列（这个算法跟Heap这种数据结构无关，
+    是因为提出这个算法的人的名字叫Heap）。主要用递归+交换实现全排列：
+      <ol>
+        <li>保持第n个元素不动，对前n-1个元素全排列。</li>
+        <li>如果n是奇数，交换最后一个元素和第一个元素，如果n是偶数，交换最后一个元素和i位置的元素。重复上诉过程。</li>
+      </ol>
+    </li>
+    </ol>
+  <script>
+    // 方式一
+    function permutation(arr, n) {
+      if (n === 0) {
+        return [[]]
+      }
+      // 取出第一个元素
+      let firstItem = arr[0]
+      // 求 f(n-1) 的全排列，得到一个二维数组
+      let remainItems = permutation(arr.slice(1), n-1)
+      // 循环 remainItems
+      return remainItems.reduce((acc, cur) => {
+          // 用插值的方式将 firstItem 放到 cur 的每个元素之间
+          for(let i = 0; i < n; i++) {
+            acc.push([...cur.slice(0, i), firstItem, ...cur.slice(i)])
+          }
+          return acc
+      }, [])
+    }
+
+    // 方式二
+    function headPermutation(arr, n, result) {
+      function swap(index1, index2) {
+        let temp = arr[index1]
+        arr[index1] = arr[index2]
+        arr[index2] = temp
+      }
+
+      if (n === 1) {
+        // 这里一定要用slice拷贝一份数组
+        result.push(arr.slice(0))
+      } else {
+        for(let i = 0; i < n; i++) {
+          headPermutation(arr, n - 1, result)
+          swap(n % 2 ? 0 : i, n - 1)
+        }
+      }
+    }
+
+    // test --------------------
+
+    let testArr = ['a','b','c']
+
+    console.log('方式一：')
+    console.log(permutation(testArr, testArr.length))
+
+    const result = []
+    headPermutation(testArr, testArr.length, result)
+    console.log('方式二：')
+    console.log(result)
+
+
+  </script>
+</body>
+</html>
