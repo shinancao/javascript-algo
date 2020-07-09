@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>6.2 priority queue</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>基于堆结构实现优先级队列</h1>
+  <ol>
+    <li>入队列的数据项：例如['kitten', 2]，数字表示优先级，越小优先级越高。</li>
+    <li>出队列时查找优先级最高的里面先插入队列的。</li>
+    <li>插入和删除的时间复杂度：O(logn)</li>
+    <li>因为要一直保持堆的结构，所以实现的关键点是：
+      <ol>
+        <li>插入节点时向上堆化：先将节点放到末尾，然后依次比较其与父节点的大小，如果小于父节点就交换。</li>
+        <li>删除节点时向下堆化：先将最后一个节点放到顶部，然后依次比较其于左右节点的大小，在左右节点中选出较小的与其交换。</li>
+      </ol>
+    </li>
+  </ol>
+  <script>
+    function swap(arr, i, j) {
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+
+    class PriorityQueue {
+      constructor() {
+        this.collection = []
+      }
+
+      print() {
+        console.log(this.collection)
+      }
+
+      enqueue(node) {
+        this.collection.push(node)
+        this.bubbleUp()
+      }
+
+      bubbleUp() {
+        let i = this.size() - 1
+        let node = this.collection[i]
+        
+        while(true) {
+          let parent = Math.floor((i - 1) / 2)
+          if (parent < 0) return
+
+          if (this.collection[parent][1] > node[1]) {
+            swap(this.collection, parent, i)
+            i = parent
+          } else {
+            break
+          }
+        }
+      }
+
+      dequeue() {
+        if (this.isEmpty()) return
+        if (this.size() === 1) return this.collection.pop()[0]
+
+        let pop = this.collection[0]
+
+        this.collection[0] = this.collection.pop()
+
+        this.bubbleDown()
+        return pop[0]
+      }
+
+      bubbleDown() {
+        let i = 0
+        let node = this.collection[i]
+
+        while(true) {
+          let left = 2 * i + 1
+          let right = 2 * i + 2
+
+          if (right >= this.size()) return
+
+          let min = this.collection[left][1] <= this.collection[right][1] ? left : right
+          if (this.collection[min][1] < node[1]) {
+            swap(this.collection, min, i)
+            i = min
+          } else {
+            break
+          }
+        }
+      }
+
+      front() {
+        return this.collection[0]
+      }
+
+      size() {
+        return this.collection.length
+      }
+
+      isEmpty() {
+        return this.size() === 0
+      }
+    }
+
+    const queue = new PriorityQueue()
+    queue.enqueue(['kitten', 2])
+    queue.enqueue(['dog', 2])
+    queue.enqueue(['human', 1])
+    queue.print()
+    console.log(queue.dequeue())
+    console.log(queue.dequeue())
+    console.log(queue.dequeue())
+  </script>
+</body>
+</html>

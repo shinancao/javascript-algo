@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>6.4 circle queue</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>实现循环队列</h1>
+  <ol>
+    <li>循环队列一般是一个有固定大小的队列，当队列末尾已经没有空间可以插入时，队头还有空隙，就将数据重新从队头开始插入。</li>
+    <li>实现的关键点：
+      <ol>
+        <li>定义两个指针：read是当前可取数的位置，write是当前可插入的位置。</li>
+        <li>内部的数组初始化时用null填充。</li>
+        <li>取数后将write加1，超过最大长度，就回到0。</li>
+        <li>插入数后将read加1，超过最大长度，就回到0。</li>
+      </ol>
+    </li>
+  </ol>
+  <script>
+    class CircleQueue {
+      constructor(size) {
+        this.queue = []
+        this.read = 0
+        this.write = 0
+        this.max = size - 1
+
+        while(size > 0) {
+          this.queue.push(null)
+          size--
+        }
+      }
+
+      enqueue(item) {
+        if (this.queue[this.write] === null) {
+          this.queue[this.write++] = item
+          if (this.write > this.max) {
+            this.write = 0
+          }
+          return item
+        }
+        return null
+      }
+
+      dequeue() {
+        if (this.queue[this.read] !== null) {
+          let item = this.queue[this.read]
+          this.queue[this.read++] = null
+          if (this.read > this.max) {
+            this.read = 0
+          }
+          return item
+        }
+        return null
+      }
+
+      print() {
+        console.log(this.queue)
+      }
+    }
+
+    const queue = new CircleQueue(5)
+    queue.enqueue('a')
+    queue.enqueue('b')
+    queue.enqueue('c')
+    queue.enqueue('d')
+    queue.enqueue('e')
+    queue.enqueue('f')
+    queue.print()
+    console.log(queue.dequeue())
+    console.log(queue.dequeue())
+  </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>6.2 priority queue</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>实现优先级队列</h1>
+  <ol>
+    <li>入队列的数据项：例如['kitten', 2]，数字表示优先级，越小优先级越高。</li>
+    <li>出队列时查找优先级最高的里面排在队前面的。</li>
+    <li>dequeue的时间复杂度为O(n)，其他操作的时间复杂度为O(1)。</li>
+  </ol>
+  <script>
+    class PriorityQueue {
+      constructor() {
+        this.collection = []
+      }
+
+      print() {
+        console.log(this.collection)
+      }
+
+      enqueue(val) {
+        this.collection.push(val)
+      }
+
+      findPriority() {
+        const allPriority = this.collection.map(keys => keys[1])
+        const minPriority = Math.min.apply(null, allPriority)
+        return this.collection.find(keys => {
+          return keys[1] === minPriority
+        })
+      }
+
+      dequeue() {
+        const removeItem = this.findPriority()
+        const removeItemIndex = this.collection.indexOf(removeItem)
+        this.collection.splice(removeItemIndex, 1)
+        return removeItem[0]
+      }
+
+      front() {
+        return this.collection[0]
+      }
+
+      size() {
+        return this.collection.length
+      }
+
+      isEmpty() {
+        return this.size() === 0
+      }
+    }
+  </script>
+</body>
+</html>
