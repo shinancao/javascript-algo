@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>5.1 stack</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>实现栈结构</h1>
+  <ol>
+    <li>特点：先进后出</li>
+  </ol>
+  <script>
+    class Stack {
+      constructor() {
+        this.collection = []
+      }
+      
+      print() {
+        console.log(this.collection);
+      }
+      
+      push (val) {
+        this.collection.push(val)
+      }
+
+      pop () {
+        return this.collection.pop()
+      }
+
+      peek () {
+        return this.collection[this.collection.length - 1]
+      }
+
+      isEmpty () {
+        return this.collection.length === 0
+      }
+
+      clear () {
+        return (this.collection.length = 0)
+      }
+    }
+  </script>
+</body>
+</html>
