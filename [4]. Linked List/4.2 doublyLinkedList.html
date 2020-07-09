@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>6.4 circle queue</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>实现一个不循环的双向链表</h1>
+  <ol>包括以下方法：
+    <li>添加节点到末尾</li>
+    <li>移除给定值的节点</li>
+    <li>翻转双向链表</li>
+  </ol>
+ 
+  <script>
+    const Node = function(data, prev) {
+      this.data = data
+      this.prev = prev
+      this.next = null
+    }
+
+    const DoublyLinkedList = function() {
+      this.head = null
+      this.tail = null
+
+      this.add = function(data) {
+        let node = new Node(data, null)
+
+        if (this.head === null) {
+          this.head = node
+          this.tail = node
+        } else {
+          let p = this.tail
+          p.next = node
+          node.prev = p
+          this.tail = node
+        }
+      }
+
+      this.remove = function(data) {
+        if (this.head === null) {
+          return null
+        }
+
+        if (this.head.data === data) {
+          this.head = this.head.next
+          this.head.prev = null
+        }
+
+        if (this.tail.data === data) {
+          this.tail = this.tail.prev
+          this.tail.next = null
+        }
+
+        let curr = this.head.next
+        while(curr) {
+          if (curr.data === data) {
+            let prev = curr.prev
+            prev.next = curr.next
+            curr.next.prev = prev
+          }
+          curr = curr.next
+        }
+      }
+
+      this.reverse = function() {
+        if (this.head === null || this.head.next === null) {
+          return this.head
+        }
+
+        this.tail = this.head
+        let curr = this.head
+        let prev = null
+        while(curr) {
+          let next = curr.next
+          curr.next = prev
+          curr.prev = next
+
+          prev = curr
+          curr = next
+        }
+
+        if (prev != null) {
+          this.head = prev
+        }
+      }
+    }
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>6.4 circle queue</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>实现一个简单的链表</h1>
+ 
+  <script>
+    function LinkedList() {
+      var length = 0;
+      var head = null;
+
+      var Node = function(element){
+        this.element = element;
+        this.next = null;
+      };
+
+      this.head = function(){
+        return head;
+      };
+
+      this.size = function(){
+        return length;
+      };
+
+      this.add = function(element){
+        const node = new Node(element)
+        if (head === null) {
+          head = node
+        } else {
+          let p = head
+          while(p.next !== null) {
+            p = p.next
+          }
+          p.next = node
+        }
+        length++
+      }
+    }
+
+  </script>
+</body>
+</html>
