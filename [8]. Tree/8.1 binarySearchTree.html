@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>8.1 binary search tree</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>实现二叉查找树（Binary Search Tree）</h1>
+  <ol>
+    <li>二叉查找树也叫二叉搜索树，特点是对于任意一个节点，它的左子树中每一个值，
+      都小于这个节点的值，它的右子树中的每一个值都大于这个节点的值。</li>
+    <li>查找、插入、删除的时间复杂度：O(logn)。</li>
+    <li>本例中实现的方法：
+      <ol>
+        <li>插入一个节点。</li>
+        <li>查找最小值，一定在树的最左边。</li>
+        <li>查找最大值，一定在树的最右边。</li>
+        <li>查找一个给定值是否在树中。</li>
+        <li>判断一个树是否是二叉查找树。</li>
+        <li>计算树的最小高度，叶子节点的高度为0。</li>
+        <li>计算树的最大高度。</li>
+        <li>判断一个树是否为平衡二叉树，最大高度的最小高度相差不超过1。</li>
+        <li>删除一个节点，相对复杂一些，实现步骤：
+          <ol>
+            <li>在树中找到要删除的节点和其父节点，递归查找。</li>
+            <li>分3种情况删除，是叶子节点时，如果这个节点是父节点的左节点，就将父节点的左节点置为null，
+              如果是父节点的右节点，就将父节点的右节点置为null。</li>
+            <li>只有一个子节点时，如果是左子节点，就将该左子节点挂在父节点左边，
+              如果是右子节点，就将该右子节点挂在父节点右边。
+            </li>
+            <li>有两个节点时，为了保证二叉查找树特点不变，要找到替代者，然后删除该替代者，将它的值赋给本来要删除的节点。
+              符合要求的替代者要么是左子树中的最右边节点，要么是右子树中的最左边节点。找一边的即可，找到后再按第1，2种情况删除。
+            </li>
+        </li>
+      </ol>
+    </li>
+  </ol>
+  <script>
+    var displayTree = tree => console.log(JSON.stringify(tree, null, 2));
+
+    function Node(value) {
+      this.value = value;
+      this.left = null;
+      this.right = null;
+    }
+    function BinarySearchTree() {
+      this.root = null;
+      
+      this.add = function(value) {
+        let node = new Node(value)
+
+        if (this.root === null) {
+          this.root = node
+          return
+        }
+        
+        function insert(parentNode) {
+          if (value < parentNode.value) {
+            // 插入左边
+            if (parentNode.left === null) {
+              parentNode.left = node
+            } else {
+              insert(parentNode.left)
+            }
+          } else {
+            if (parentNode.right === null) {
+              parentNode.right = node
+            } else {
+              insert(parentNode.right)
+            }
+          }
+        }
+
+        insert(this.root)
+      }
+
+      this.remove = function(value) {
+        if (this.root === null) return null
+        
+        let target = null
+        let parent = null
+        
+        function findNode(parentNode) {
+          if (parentNode.value === value) {
+            target = parentNode
+          } else if (parentNode.value < value) {
+            if (parentNode.right !== null) {
+              parent = parentNode
+              findNode(parentNode.right)
+            }
+          } else {
+            if (parentNode.left !== null) {
+              parent = parentNode
+              findNode(parentNode.left)
+            }
+          }
+        }
+
+        findNode(this.root)
+
+        // 没有找到target
+        if (target === null) return null
+        let children = (target.left !== null ? 1 : 0) + (target.right !== null ? 1 : 0)
+        // 是叶子节点的情况
+        if (children === 0) {
+          if (this.root === target) {
+            this.root = null
+          } else if (parent.left === target) {
+            parent.left = null
+          } else {
+            parent.right = null
+          }
+        }
+        // 只有一个节点的时候
+        else if (children === 1) {
+          let newChild = target.left || target.right
+          if (this.root === target) {
+            this.root = newChild
+          } else if (parent.left === target) {
+            parent.left = newChild
+          } else {
+            parent.right = newChild
+          }
+          target = null
+        } 
+        // 两个节点的时候，找到待删除节点的替换节点，删除该替换节点，将它的值赋给待删除节点
+        // 合适的替换节点，要么是左子树的最右边节点，要么是右子树的最左边节点
+        // 下面的实现到左边找合适的
+        else {
+          let replace = target.left
+          let replaceParent = target
+          
+          while(replace.right) {
+            replaceParent = replace
+            replace = replace.right
+          }
+
+          target.value = replace.value
+          // replace的右节点一定是null，所以判断左节点即可
+          if (replace.left === null) {
+            replaceParent.left = null
+          } else {
+            replaceParent.left = replace.left
+          }
+
+          replace = null
+        }
+      }
+
+      this.findMin = function() {
+        if (this.root === null) {
+          return null
+        }
+
+        let l = this.root.left
+        if (l === null) {
+          return this.root.value
+        } else {
+          while(l.left) {
+            l = l.left
+          }
+          return l.value
+        }
+      }
+
+      this.findMax = function() {
+        if (this.root === null) {
+          return null
+        }
+
+        let r = this.root.right
+        if (r === null) {
+          return this.root.value
+        } else {
+          while(r.right) {
+            r = r.right
+          }
+          return r.value
+        }
+      }
+
+      this.isPresent = function(value) {
+        if (this.root === null) return false
+
+        function search(parentNode) {
+          if (value === parentNode.value) {
+            return true
+          }
+          else if (value < parentNode.value) {
+            // 在左边搜
+            if (parentNode.left === null) {
+              return false
+            } else {
+              return search(parentNode.left)
+            }
+          } else {
+            // 在右边搜
+            if (parentNode.right === null) {
+              return false
+            } else {
+              return search(parentNode.right)
+            }
+          }
+        }
+        return search(this.root)
+      }
+
+      this.findMinHeight = function(root = this.root) {
+        if (root === null) return -1
+        if (root.left === null && root.right === null) return 0
+        if (root.left === null) {
+          return this.findMinHeight(root.right) + 1
+        }
+        if (root.right === null) {
+          return this.findMinHeight(root.left) + 1
+        }
+
+        let lHeight = this.findMinHeight(root.left)
+        let rHeight = this.findMinHeight(root.right)
+        return Math.min(lHeight, rHeight) + 1
+      }
+
+      this.findMaxHeight = function(root = this.root) {
+        if (root === null) return -1
+        if (root.left === null && root.right === null) return 0
+        if (root.left === null) {
+          return this.findMaxHeight(root.right) + 1
+        }
+        if (root.right === null) {
+          return this.findMaxHeight(root.left) + 1
+        }
+
+        let lHeight = this.findMaxHeight(root.left)
+        let rHeight = this.findMaxHeight(root.right)
+        return Math.max(lHeight, rHeight) + 1
+      }
+
+      this.isBalanced = function(root = this.root) {
+        if (root === null) return true
+        if (root.left === null && root.right === null) return true
+        if (root.left === null) {
+          return this.findMaxHeight(root.right) <= 0
+        }
+        if (root.right === null) {
+          return this.findMaxHeight(root.left) <= 0
+        }
+
+        let lHeight = this.findMaxHeight(root.left)
+        let rHeight = this.findMaxHeight(root.right)
+        if (Math.abs(lHeight - rHeight) > 1) {
+          return false
+        } else {
+          return this.isBalanced(root.left) && this.isBalanced(root.right)
+        }
+      }
+    }
+
+    function isBinarySearchTree(tree) {
+      if (tree.root === null) {
+        return null
+      }
+
+      let isBST = true
+      function checkBST(parentNode) {
+        if (parentNode.left !== null) {
+          if (parentNode.value < parentNode.left.value) {
+            isBST = false
+          } else {
+            checkBST(parentNode.left)
+          }
+        }
+
+        if (parentNode.right !== null) {
+          if (parentNode.value > parentNode.right.value) {
+            isBST = false
+          } else {
+            checkBST(parentNode.right)
+          }
+        }
+      }
+
+      checkBST(tree.root)
+
+      return isBST
+    }
+
+    const tree = new BinarySearchTree()
+    tree.add(4)
+    tree.add(8)
+    tree.add(10)
+    tree.add(2)
+    tree.add(56)
+    tree.add(9)
+    tree.add(1)
+    displayTree(tree)
+    // console.log(isBinarySearchTree(tree))
+    // console.log(tree.findMinHeight())
+    // console.log(tree.findMaxHeight())
+    // console.log(tree.isBalanced())
+    tree.remove(10)
+    displayTree(tree)
+  </script>
+</body>
+</html>
