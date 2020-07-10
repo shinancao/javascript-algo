@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>8.2 depth first search</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>深度优先搜索（DFS）二叉树</h1>
+  <ol>
+    <li>深度优先所有一般分为前序遍历、中序遍历、后序遍历，已打印根节点的位置来判读是哪种遍历。</li></ol>
+  <script>
+    var displayTree = tree => console.log(JSON.stringify(tree, null, 2))
+    function Node(value) {
+      this.value = value
+      this.left = null
+      this.right = null
+    }
+    function BinarySearchTree() {
+      this.root = null;
+      
+      this.inorder = function() {
+        if (this.root === null) return null
+
+        let array = []
+        function order(root) {
+          if (root.left !== null) {
+            order(root.left)
+          }
+          array.push(root.value)
+          if (root.right !== null) {
+            order(root.right)
+          }
+        }
+        order(this.root)
+        return array
+      }
+      this.preorder = function() {
+        if (this.root === null) return null
+
+        let array = []
+        function order(root) {
+          array.push(root.value)
+          if (root.left !== null) {
+            order(root.left)
+          }
+          if (root.right !== null) {
+            order(root.right)
+          }
+        }
+        order(this.root)
+        return array
+      }
+      this.postorder = function() {
+        if (this.root === null) return null
+        
+        let array = []
+        function order(root) {
+          if (root.left !== null) {
+            order(root.left)
+          }
+          if (root.right !== null) {
+            order(root.right)
+          }
+          array.push(root.value)
+        }
+        order(this.root)
+        return array
+      }
+    }
+  </script>
+</body>
+</html>
