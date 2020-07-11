@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>8.4 trie tree</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>字典树（Trie Tree）</h1>
+  <ol>
+    <li>它是一个树形结构。它是一种专门处理字符串匹配的数据结构，用来解决在一组字符串集合中快速查找某个字符串的问题。</li>
+    <li>在本例的实现中，每个位置存储的是当前的前缀，没有只存单个字符，这样便于获取所有的单词。</li>
+  </ol>
+  <script>
+    var displayTree = tree => console.log(JSON.stringify(tree, null, 2))
+    var Node = function() {
+      this.keys = new Map()
+      this.end = false
+      this.setEnd = function() {
+        this.end = true
+      }
+      this.isEnd = function() {
+        return this.end
+      }
+      this.add = function(str, node) {
+        this.keys.set(str, node)
+      }
+      this.get = function(str) {
+        return this.keys.get(str)
+      }
+      this.has = function(str) {
+        return this.keys.has(str)
+      }
+    }
+    var Trie = function() {
+      this.root = new Node()
+
+      this.add = function(word) {
+        let p = this.root
+        let k = ''
+        for(let s of word) {
+          k += s
+          if (!p.has(k)) {
+            let childNode = new Node()
+            p.add(k, childNode)
+            p = childNode
+          } else {
+            p = p.get(k)
+          }
+        }
+        p.setEnd()
+      }
+
+      this.isWord = function(word) {
+        let p = this.root
+        let k = ''
+        for(let s of word) {
+          k += s
+          if (p.has(k)) {
+            p = p.get(k)
+          } else {
+            return false
+          }
+        }
+        return p.isEnd()
+      }
+
+      this.print = function() {
+        let words = []
+        
+        function getWord(node, key) {
+          if (node.isEnd()) {
+            words.push(key)
+          }
+          
+          for(let k of node.keys.keys()) {
+            getWord(node.get(k), k)
+          }
+        }
+        getWord(this.root, '')
+        return words
+      }
+    }
+
+    const trie = new Trie()
+    trie.add('jump')
+    trie.add('jumps')
+    trie.add('jumped')
+    trie.add('house')
+    trie.add('mouse')
+    console.log(trie.print())
+    console.log(trie.isWord('jumps'))
+  </script>
+</body>
+</html>
