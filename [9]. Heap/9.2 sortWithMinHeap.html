@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>9.1 max heap</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>利用小顶堆实现数组从小到大排序</h1>
+  <script>
+    // check if array is sorted
+    function isSorted(arr) {
+      var check = i =>
+        i == arr.length - 1 ? true : arr[i] > arr[i + 1] ? false : check(i + 1);
+      return check(0);
+    }
+    // generate a randomly filled array
+    var array = new Array();
+    (function createArray(size = 5) {
+      array.push(+(Math.random() * 100).toFixed(0));
+      return size > 1 ? createArray(size - 1) : undefined;
+    })(25);
+
+    function swap(arr, x, y) {
+          [arr[x], arr[y]] = [arr[y], arr[x]]
+        }
+
+    var MinHeap = function() {
+      this.collection = []
+      this.insert = function(value) {
+        this.collection.push(value)
+
+        this.bubbleUp()
+      }
+
+      this.bubbleUp = function() {
+        let i = this.collection.length - 1
+        while(true) {
+          let parent = Math.floor((i - 1) / 2)
+          if (parent < 0) return
+          if (this.collection[parent] > this.collection[i]) {
+            swap(this.collection, parent, i)
+            i = parent
+          } else {
+            break
+          }
+        }
+      }
+
+      this.remove = function() {
+        if (this.collection.length === 0) return null
+        
+        let minItem = this.collection[0]
+        this.collection[0] = this.collection.pop()
+        
+        this.bubbleDown()
+        
+        return minItem
+      }
+
+      this.bubbleDown = function() {
+        let len = this.collection.length
+        let i = 0
+        while(true) {
+          let l = 2 * i + 1
+          let r = 2 * i + 2
+          if (l >= len || r >= len) return
+          let min = this.collection[l] <= this.collection[r] ? l : r
+          if(this.collection[min] < this.collection[i]) {
+            swap(this.collection, min, i)
+            i = min
+          } else {
+            break
+          }
+        }
+      }
+      this.sort = function() {
+        let array = []
+        let len = this.collection.length
+        for(let i = 0; i < len; i++) {
+          array.push(this.remove())
+        }
+        return array
+      }
+    }
+
+    let heap = new MinHeap()
+    array.forEach(e => heap.insert(e))
+    console.log(heap.sort())
+  </script>
+</body>
+</html>
