@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>2.7 breadth first search</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>深度优先搜索</h1>
+  <ol>
+    <li>目标：对邻接矩阵存储的无向图结构，进行深度优先搜索，找到与所给节点相连通的节点。</li>
+    <li>深度优先搜索就是沿着一个节点去访问其所能达到的最大深度，然后再回去再从其他分支继续这样搜索。</li>
+    <li>邻接矩阵实际上是对称矩阵。</li>
+    <li>实现过程和广度优先搜索很像，只是此时要借助的是一个<strong>栈结构<strong>。</li>
+  </ol>
+  <script>
+    // 递归求解
+    const nodes = []
+    function dfs2(graph, root) {
+      nodes.push(root)
+
+      let curConnected = graph[root]
+      let neighborIdx = []
+      let idx = curConnected.indexOf(1)
+      while(idx != -1) {
+        neighborIdx.push(idx)
+        idx = curConnected.indexOf(1, idx + 1)
+      }
+
+      for(let i = 0; i < neighborIdx.length; i++) {
+        if (nodes.indexOf(neighborIdx[i]) === -1) {
+          dfs2(graph, neighborIdx[i])
+        }
+      }
+    }
+    
+    // 邻街矩阵 非递归实现
+    function dfs(graph, root) {
+      const nodes = [root]
+      const stack = [root]
+      while (stack.length !== 0) {
+        let current = stack.pop()
+        //找相邻节点和广度优先一样
+        // 这里直接找到所有 1 的位置
+        // 其他地方看到的实现大多是遍历找值为1的位置
+        let curConnected = graph[current]
+        let neighborIdx = []
+        let idx = curConnected.indexOf(1)
+        while(idx != -1) {
+          neighborIdx.push(idx)
+          idx = curConnected.indexOf(1, idx + 1)
+        }
+        
+        for(let i = 0; i < neighborIdx.length; i++) {
+          // 这里其实是在判断该节点是否已经访问过了，访问过的节点不用再访问
+          if (nodes.indexOf(neighborIdx[i]) === -1) {
+            nodes.push(neighborIdx[i])
+            stack.push(neighborIdx[i])
+          }
+        }
+      }
+      return nodes
+    }
+
+    var exBFSGraph = [
+    [0, 1, 0, 0],
+    [1, 0, 1, 0],
+    [0, 1, 0, 0],
+    [0, 0, 0, 0]
+    ];
+    
+    dfs2(exBFSGraph, 3)
+    console.log(nodes)
+  </script>
+</body>
+</html>

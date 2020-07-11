@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>2.7 breadth first search</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>广度优先搜索</h1>
+  <ol>
+    <li>目标：对邻接矩阵存储的无向图结构，进行广度优先搜索，找到所给的节点能够到达的每个节点的距离。</li>
+    <li>广度优先搜索有点类似生活中的地毯式搜索，一层一层的找。对应的邻接矩阵上看，就是一行一行的找，通常会给定一个开始节点，也就可以确定从哪一行开始找。</li>
+    <li>邻接矩阵实际上是对称矩阵。</li>
+    <li>每一行的列中 1 的位置就是与这个节点相邻的节点的行号。</li>
+    <li>实现广度优先搜索时需要借助一个队列来实现。</li>
+  </ol>
+  <script>
+    function bfs(graph, root) {
+      const nodesLen = {}
+      for (let i = 0; i < graph.length; i++) {
+        nodesLen[i] = Infinity
+      }
+      nodesLen[root] = 0
+      const queue = [root]
+      let current
+      while(queue.length !== 0) {
+        current = queue.shift()
+        let curConnected = graph[current]
+        let neighborIdx = []
+        let idx = curConnected.indexOf(1)
+        while(idx !== -1) {
+          neighborIdx.push(idx)
+          idx = curConnected.indexOf(1, idx + 1)
+        }
+
+        for(let i = 0; i < neighborIdx.length; i++) {
+          if (nodesLen[[neighborIdx[i]]] === Infinity) {
+            nodesLen[[neighborIdx[i]]] = nodesLen[current] + 1
+            queue.push([neighborIdx[i]])
+          }
+        }
+      }
+      return nodesLen
+    }
+
+    var exBFSGraph = [
+      [0, 1, 0, 0],
+      [1, 0, 1, 0],
+      [0, 1, 0, 1],
+      [0, 0, 1, 0]
+    ];
+    console.log(bfs(exBFSGraph, 3))
+  </script>
+</body>
+</html>
