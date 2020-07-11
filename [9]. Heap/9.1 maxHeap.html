@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>9.1 max heap</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>实现一个大顶堆</h1>
+  <script>
+    function swap(arr, x, y) {
+      [arr[x], arr[y]] = [arr[y], arr[x]]
+    }
+
+    var MaxHeap = function() {
+      this.collection = []
+
+      this.insert = function(value) {
+        this.collection.push(value)
+        this.bubbleUp()
+      }
+
+      this.bubbleUp = function() {
+        let i = this.collection.length - 1
+        while(true) {
+          let parent = Math.floor((i - 1) / 2)
+          if (parent < 0) return
+
+          if (this.collection[parent] < this.collection[i]) {
+            swap(this.collection, parent, i)
+            i = parent
+          } else {
+            break
+          }
+        }
+      }
+
+      this.print = function() {
+        return this.collection
+      }
+
+      this.remove = function() {
+        if (this.collection.length === 0) return null
+
+        let max = this.collection[0]
+        this.collection[0] = this.collection.pop()
+        this.bubbleDown()
+        return max
+      }
+
+      this.bubbleDown = function() {
+        let i = 0
+        while(true) {
+          let left = 2*i + 1
+          let right = 2 * i + 2
+          if (left >= this.size()) return
+          let max = this.collection[left] <= this.collection[right] ? right : left
+          if (this.collection[i] < this.collection[max]) {
+            swap(this.collection, i, max)
+            i = max
+          } else {
+            break
+          }
+        }
+      }
+    }
+    
+    let heap = new MaxHeap()
+    heap.insert(6)
+    heap.insert(22)
+    heap.insert(30)
+    heap.insert(37)
+    heap.insert(63)
+    heap.insert(48)
+    console.log(heap.print())
+  </script>
+</body>
+</html>
