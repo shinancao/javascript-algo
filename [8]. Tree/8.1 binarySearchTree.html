@@ -43,6 +43,7 @@
               符合要求的替代者要么是左子树中的最右边节点，要么是右子树中的最左边节点。找一边的即可，找到后再按第1，2种情况删除。
             </li>
         </li>
+        <li>翻转二叉树，递归将每个节点的左右节点互换即可。</li>
       </ol>
     </li>
   </ol>
@@ -264,6 +265,17 @@
           return this.isBalanced(root.left) && this.isBalanced(root.right)
         }
       }
+      
+      this.invert = function(root = this.root) {
+        if (root === null) return
+
+        let temp = root.left
+        root.left = root.right
+        root.right = temp
+
+        this.invert(root.left)
+        this.invert(root.right)
+      }
     }
 
     function isBinarySearchTree(tree) {
@@ -308,7 +320,8 @@
     // console.log(tree.findMinHeight())
     // console.log(tree.findMaxHeight())
     // console.log(tree.isBalanced())
-    tree.remove(10)
+    // tree.remove(10)
+    tree.invert()
     displayTree(tree)
   </script>
 </body>

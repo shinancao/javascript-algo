@@ -28,6 +28,34 @@
     }
     function BinarySearchTree() {
       this.root = null;
+
+      this.add = function(value) {
+        let node = new Node(value)
+
+        if (this.root === null) {
+          this.root = node
+          return
+        }
+        
+        function insert(parentNode) {
+          if (value < parentNode.value) {
+            // 插入左边
+            if (parentNode.left === null) {
+              parentNode.left = node
+            } else {
+              insert(parentNode.left)
+            }
+          } else {
+            if (parentNode.right === null) {
+              parentNode.right = node
+            } else {
+              insert(parentNode.right)
+            }
+          }
+        }
+
+        insert(this.root)
+      }
       
       this.inorder = function() {
         if (this.root === null) return null
@@ -78,6 +106,15 @@
         return array
       }
     }
+    const tree = new BinarySearchTree()
+    tree.add(4)
+    tree.add(8)
+    tree.add(10)
+    tree.add(2)
+    tree.add(56)
+    tree.add(9)
+    tree.add(1)
+    console.log(tree.inorder())
   </script>
 </body>
 </html>
