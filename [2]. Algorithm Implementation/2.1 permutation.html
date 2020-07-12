@@ -30,6 +30,10 @@
     </li>
     </ol>
   <script>
+    function swap(arr, x, y) {
+      [arr[x], arr[y]] = [arr[y], arr[x]]
+    }
+
     // 方式一
     function permutation(arr, n) {
       if (n === 0) {
@@ -51,19 +55,31 @@
 
     // 方式二
     function headPermutation(arr, n, result) {
-      function swap(index1, index2) {
-        let temp = arr[index1]
-        arr[index1] = arr[index2]
-        arr[index2] = temp
-      }
-
       if (n === 1) {
         // 这里一定要用slice拷贝一份数组
         result.push(arr.slice(0))
       } else {
         for(let i = 0; i < n; i++) {
           headPermutation(arr, n - 1, result)
-          swap(n % 2 ? 0 : i, n - 1)
+          swap(arr, n % 2 ? 0 : i, n - 1)
+        }
+      }
+    }
+
+    // 方式三
+    function permutation3(arr, from = 0, to = arr.length - 1, result = []) {
+      if (from < 0 || to > arr.length || from > to) return
+
+      if (from === to) {
+        result.push(arr.slice(0))
+      } else {
+        for(let i = from; i <= to; i++) {
+          // 将当前元素放在第一个位置
+          swap(arr, i, from)
+          // 全排列剩余的元素
+          permutation3(arr, from + 1, to, result)
+          // 排列之后再将当前元素还原到之前的位置
+          swap(arr, from, i)
         }
       }
     }
@@ -79,6 +95,11 @@
     headPermutation(testArr, testArr.length, result)
     console.log('方式二：')
     console.log(result)
+
+    console.log('方式三：')
+    const result3 = []
+    permutation3(testArr, 0, testArr.length - 1, result3)
+    console.log(result3)
 
 
   </script>
