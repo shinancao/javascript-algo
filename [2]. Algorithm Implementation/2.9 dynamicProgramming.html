@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>2.9 dynamic programming</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>动态规划</h1>
+  <div>题目：对于一组不同重量、不可分割的物品，我们需要选择一些装入背包，在满足背包最大重量限制的前提下，背包中物品总重量的最大值是多少呢？</div>
+  <script>
+    // 先看回塑解法
+    function knapsack() {
+      let maxW = Number.MIN_VALUE
+      let weight = [2, 2, 4, 6, 3]
+      let n = 5       //物品个数
+      let w = 9       //背包承受的最大重量
+      // 初始化一个备忘录，避免在递归的过程中重复计算
+      let memo = []
+      for(let i = 0; i < n; i++) {
+        let temp = []
+        for(let j = 0; j < w+1; j++) {
+          temp.push(false)
+        }
+        memo.push(temp)
+      }
+
+      function f(i, currW) { // i表示当前要放入第几个物品，currW表示当前背包的重量
+        if (currW === w || i === n) {
+          if (currW > maxW) maxW = currW
+          return
+        }
+
+        if(memo[i][currW] === true) return
+        memo[i][currW] = true
+
+        f(i+1, currW) // 选择不装第i个物品，直接到下一个物品
+        if (currW + weight[i+1] <= w) { // 选择装第i个物品，再到下一个物品
+          f(i+1, currW + weight[i+1])
+        }
+      }
+
+      f(0, 0)
+
+      console.log(maxW)
+    }
+    knapsack()
+
+    // 用动态规划的方式解决
+    // weight 是物品的重量数组
+    // n 是物品的个数
+    // w是物品可承受的最大重量
+    function knapsack2(weight, n, w) {
+      let states = [] // 这是一个 n*(w+1) 的多维数组
+      for(let i = 0; i < n; i++) {
+        let temp = []
+        for(let j = 0; j < w+1; j++) {
+          temp.push(false)
+        }
+        states.push(temp)
+      }
+
+      // 第1个物品单独提出来，因为后面的物品状态要通过第1的状态得出
+      states[0][0] = true // 第1个物品不放
+      if (weight[0] <= w) { // 第1个物品放
+        states[0][weight[0]] = true
+      }
+
+      for(let i = 1; i < n; i++) {
+        for(let j = 0; j <= w; j++) {
+          // 选择不放，那就直接是上一排的相同列为true
+          if (states[i-1][j]) {
+            states[i][j] = true 
+          }
+        }
+
+        for(let j = 0; j <= w - weight[i]; j++) {
+          if (states[i-1][j]) {
+            states[i][j+weight[i]] = true
+          }
+        }
+      }
+
+      //只要找最后一行最后一个为true的即可
+      for(let j = w; j >= 0; j--) {
+        if (states[n-1][j]) {
+          return j
+        }
+      }
+
+      return 0
+    }
+
+    let res = knapsack2([2, 2, 4, 6, 3], 5, 9)
+    console.log(res)
+
+    // 上面的优化版本，只用一维数组即可，因为最后就只关心最后一行的状态，前面的状态使用过就再没用了
+    function knapsack3(items, n, w) {
+      let states = Array.from({length: w+1}).fill(false)
+
+      states = [0]
+      if (items[0] <= w) {
+        states[items[0]] = true
+      }
+
+      for(let i = 0; i < n; i++) {
+        for(let j = w - items[i]; j >= 0; j--) {
+          if (states[j]==true) {
+            states[j+items[i]] = true
+          }
+        }
+      }
+
+      for(let j = w; j >= 0; j--) {
+        if (states[j]) {
+          return j
+        }
+      }
+
+      return 0
+    }
+
+    let res3 = knapsack3([2, 2, 4, 6, 3], 5, 9)
+    console.log(res3)
+
+    // 解决杨辉三角的到达最短路径问题
+    function minDist(items, n) { // n是行数
+      let result = items[0][0]
+      let j = 0
+      for(let i = 1; i < n; i++) {
+        j = items[i][j] < items[i][j+1] ? j : j+1
+        result += items[i][j]
+      }
+      return result
+    }
+    const res4 = minDist([[5], [7, 8], [2, 3, 4], [4, 9, 6, 1], [2, 7, 9, 4, 5]], 5)
+    console.log(res4)
+  </script>
+</body>
+</html>
