@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 32 - II. 从上到下打印二叉树 II</h1>
+  <div><a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var levelOrder = function(root) {
+      if (root === null) return []
+      let result = []
+      let queue = [root]
+      while(queue.length > 0) {
+        let nodes = []
+        let size = queue.length
+        for(i = 0; i < size; i++) {
+          let curr = queue.shift()
+          nodes.push(curr.val)
+    
+          if (curr.left) queue.push(curr.left)
+          if (curr.right) queue.push(curr.right)
+        }
+
+        result.push(nodes)
+      }
+      return result
+    }
+  </script>
+</body>
+</html>

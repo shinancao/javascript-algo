@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 50. 第一个只出现一次的字符</h1>
+  <div><a href="https://leetcode-cn.com/problems/di-yi-ge-zhi-chu-xian-yi-ci-de-zi-fu-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var firstUniqChar = function(s) {
+      if (!s) return ' '
+      // 还是使用map做统计
+      let map = new Map()
+      for(let char of s) {
+        map.set(char, !map.has(char))
+      }
+
+      for(let char of s) {
+        if(map.get(char)) return char
+      }
+
+      return ' '
+    };
+  </script>
+</body>
+</html>

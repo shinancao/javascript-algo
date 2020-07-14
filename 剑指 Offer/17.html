@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 17. 打印从1到最大的n位数</h1>
+  <div><a href="https://leetcode-cn.com/problems/da-yin-cong-1dao-zui-da-de-nwei-shu-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var printNumbers = function(n) {
+      let numArr = []
+      let chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+      let currNum = []
+      // x是当前要排的位，从0开始
+      function permutation(x) {
+        if (x === n) {
+          let num = currNum.join('').replace(/^0*/, '')
+          if (num !== '') {
+            numArr.push(Number(num))
+          }
+          return
+        }
+
+        for(let i = 0; i < chars.length; i++) {
+          currNum[x] = i
+          permutation(x+1)
+        }
+      }
+
+      permutation(0)
+
+      return numArr
+    }
+
+    console.log(printNumbers(3))
+    
+  </script>
+</body>
+</html>

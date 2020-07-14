@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 10- I. 斐波那契数列</h1>
+  <div><a href="https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    function fib(n) {
+      if (n === 0) return 0
+      let x = 0, y = 1, z = 0
+      for (let i = 0; i < n; i++) { // f(n)就是会经过计算n-1次
+        z = (x + y) % 1000000007
+        x = y
+        y = z
+      }
+      return x // x才是f(n)的结果，y是f(n+1)的结果
+    }
+  </script>
+</body>
+</html>

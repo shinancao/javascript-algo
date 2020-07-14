@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 11. 旋转数组的最小数字</h1>
+  <div><a href="https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    // 方式一：线性遍历
+    var minArray = function(numbers) {
+      if (numbers.length === 0) return null
+      
+      let i = 0
+      for(; i < numbers.length - 1; i++) {
+        if (numbers[i+1] < numbers[i]) {
+          return numbers[i+1]
+        }
+      }
+      if (i === numbers.length - 1) {
+        return numbers[0]
+      }
+    }
+
+    // 方式二：用二分查找法
+    var minArray2 = function(numbers) {
+      let n = numbers.length
+      if (n === 0) return null
+
+      let left = 0, right = n - 1
+      while(left < right) {
+        let mid = (left + right) >>> 1
+        if (numbers[mid] > numbers[right]) {
+          left = mid + 1
+        } else if (numbers[mid] < numbers[right]) {
+          right = mid
+        } else {
+          right = right - 1
+        }
+      }
+      return numbers[left]
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 18. 删除链表的节点</h1>
+  <div><a href="https://leetcode-cn.com/problems/shan-chu-lian-biao-de-jie-dian-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    function ListNode(val) {
+      this.val = val;
+      this.next = null
+    }
+    var deleteNode = function(head, val) {
+      if (head.val === val) {
+        head = head.next
+        return head
+      }
+
+      let newHead = head
+      while(head && head.next) {
+        if (head.next.val === val) {
+          head.next = head.next.next
+        }
+        head = head.next
+      }
+      return newHead
+    }
+  </script>
+</body>
+</html>

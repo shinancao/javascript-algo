@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 21. 调整数组顺序使奇数位于偶数前面</h1>
+  <div><a href="https://leetcode-cn.com/problems/diao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var exchange = function(nums) {
+      let swap = function(arr, x, y) {
+        [arr[x], arr[y]] = [arr[y], arr[x]]
+      }
+
+      let i = 0, j = nums.length - 1
+      while(i < j) {
+        while(nums[i] % 2 !== 0 && (i < j)) {
+          i++
+        }
+        while(nums[j] % 2 === 0 && (i < j)) {
+          j--
+        }
+        swap(nums, i, j)
+      }
+      return nums
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 30. 包含min函数的栈</h1>
+  <div><a href="https://leetcode-cn.com/problems/bao-han-minhan-shu-de-zhan-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var MinStack = function() {
+      this.stack = []
+      this.minStack = []
+    };
+
+    /** 
+    * @param {number} x
+    * @return {void}
+    */
+    MinStack.prototype.push = function(x) {
+      this.stack.push(x)
+      if (this.minStack.length === 0) {
+        this.minStack.push(x)
+      } else if (this.minStack[this.minStack.length - 1] >= x) {
+        this.minStack.push(x)
+      }
+    };
+
+    /**
+    * @return {void}
+    */
+    MinStack.prototype.pop = function() {
+      let pop = this.stack.pop()
+      if (this.minStack.length > 0 && pop === this.minStack[this.minStack.length - 1]) {
+        this.minStack.pop()
+      }
+      return pop
+    };
+
+    /**
+    * @return {number}
+    */
+    MinStack.prototype.top = function() {
+      if (this.stack.length === 0) return null
+      return this.stack[this.stack.length - 1]
+    };
+
+    /**
+    * @return {number}
+    */
+    MinStack.prototype.min = function() {
+      if (this.minStack.length === 0) return null
+      return this.minStack[this.minStack.length - 1]
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 09. 用两个栈实现队列</h1>
+  <div><a href="https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var CQueue = function() {
+      this.stack1 = []
+      this.stack2 = []
+    };
+
+    /** 
+    * @param {number} value
+    * @return {void}
+    */
+    CQueue.prototype.appendTail = function(value) {
+      this.stack1.push(value)
+    };
+
+    /**
+    * @return {number}
+    */
+    CQueue.prototype.deleteHead = function() {
+      if (this.stack2.length === 0 && this.stack1.length === 0) return -1
+
+      if (this.stack2.length > 0) return this.stack2.pop()
+
+      let len = this.stack1.length
+      for (let i = 0; i < len; i++) {
+        this.stack2.push(this.stack1.pop())
+      }
+
+      return this.stack2.pop()
+    }
+  </script>
+</body>
+</html>

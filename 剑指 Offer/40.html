@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 40. 最小的k个数</h1>
+  <div><a href="https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var getLeastNumbers = function(arr, k) {
+      if (arr.length <= k) return arr
+      quicksort(arr, 0, arr.length - 1, k-1)
+      return arr.slice(0, k)
+    };
+
+    function quicksort(arr, left, right, k) {
+      if (left >= right) return
+      const p = partition(arr, left, right)
+      if (p === k) return
+      p > k ? quicksort(arr, left, p - 1, k) : quicksort(arr, p + 1, right, k)
+    }
+
+    function partition(arr, left, right) {
+      let pivot = arr[right]
+      let shift = left
+      for(let i = left; i < right; i++) {
+        if (arr[i] < pivot) {
+          swap(arr, shift, i)
+          shift++
+        }
+      }
+      swap(arr, shift, right)
+      return shift
+    }
+
+    function swap(arr, x, y) {
+      [arr[x], arr[y]] = [arr[y], arr[x]]
+    }
+  </script>
+</body>
+</html>

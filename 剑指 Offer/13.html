@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1></h1>
+  <div><a href="" target="_blank">题目入口</a></div>
+  <script>
+    var movingCount = function(m, n, k) {
+      let getVal = function(i) {
+        let res = 0
+        while(i) {
+          res += i%10
+          i = Math.floor(i/10)
+        }
+        return res
+      }
+
+      // 不要用下面这种方式初始化二维数组，这里存储的只是对象的引用
+      // let visited = Array.from({length: m}).fill(Array.from({length: n}).fill(false))
+      
+      let visited = []
+      for(let i = 0; i < m; i++) {
+        let temp = []
+        for(let j = 0; j < n; j++) {
+          temp.push(false)
+        }
+        visited.push(temp)
+      }
+
+      let dfs = function(i, j) {
+        if (i >= m || j >= n || visited[i][j] || (getVal(i) + getVal(j)) > k) return 0
+
+        visited[i][j] = true
+        return 1 + dfs(i+1, j) +dfs(i, j+1)
+      }
+
+      return dfs(0, 0)
+    }
+
+    console.log(movingCount(3, 2, 17))
+  </script>
+</body>
+</html>

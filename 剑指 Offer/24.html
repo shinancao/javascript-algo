@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 24. 反转链表</h1>
+  <div><a href="https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var reverseList = function(head) {
+      let newHead = null
+      let p = head
+      while(p) {
+        let temp = p
+        p = p.next
+        
+        temp.next = newHead
+        newHead = temp
+        
+      }
+      return newHead
+    }
+  </script>
+</body>
+</html>

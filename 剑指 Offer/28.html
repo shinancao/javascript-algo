@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 28. 对称的二叉树</h1>
+  <div><a href="https://leetcode-cn.com/problems/dui-cheng-de-er-cha-shu-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var isSymmetric = function(root) {
+      if (root === null) return true
+
+      return check(root.left, root.right)
+    };
+    // 将函数单独拿出来，跑出来的实现会少很多，很奇怪...
+    function check(left, right) {
+        if (left === null && right === null) return true
+        if (left === null || right === null || left.val !== right.val) return false
+        return check(left.left, right.right) && check(left.right, right.left)
+    }
+  </script>
+</body>
+</html>

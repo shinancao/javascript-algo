@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1><font color="red">*</font>剑指 Offer 12. 矩阵中的路径</h1>
+  <div><a href="https://leetcode-cn.com/problems/ju-zhen-zhong-de-lu-jing-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var exist = function(board, word) {
+      if (board.length === 0 || board[0].length === 0 || !word) return false
+
+      let row = board.length
+      let col = board[0].length
+
+      let dfs = function(i, j, board, word, index) {
+        // i是横坐标，j是纵坐标，index是word的下标
+        if (i < 0 || i >= row || j < 0 || j >= col || board[i][j] !== word[index]) return false
+
+        if (index === word.length-1) return true
+
+        // 当前这个位置不能再访问了
+        let temp = board[i][j]
+        board[i][j] = '-'
+        // 以board[i][j]为起始点，向上下左右四个方向搜索
+        let res = dfs(i-1,j,board,word, index+1) ||
+                  dfs(i+1,j,board,word, index+1) ||
+                  dfs(i,j-1,board,word, index+1) ||
+                  dfs(i,j+1,board,word, index+1)
+        
+        // 以board[i][j]为起始点的各个方向已搜索完，恢复原值。
+        board[i][j] = temp
+        return res
+      }
+
+      for(let i = 0; i < row; i++) {
+        for(let j = 0; j < col; j++) {
+          if (dfs(i, j, board, word, 0)) {
+            return true
+          }
+        }
+      }
+
+      return false
+    }
+
+    exist([["a","b"]], 'ba')
+  </script>
+</body>
+</html>

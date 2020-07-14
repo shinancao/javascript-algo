@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 15. 二进制中1的个数</h1>
+  <div><a href="https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var hammingWeight = function(n) {
+      let res = 0
+      while(n) {
+        n = n&(n-1)
+        res++
+      }
+      return res
+    }
+
+    var hammingWeight2 = function(n) {
+      let res = 0
+      while(n) {
+        res += (n&1)
+        n = n >>> 1
+      }
+      return res
+    }
+
+    var hammingWeight3 = function(n) {
+      let newN = n.toString(2).match(/1/g)
+      return newN? newN.length: 0
+    }
+    console.log(hammingWeight3(00000000000000000000000000001011))
+  </script>
+</body>
+</html>

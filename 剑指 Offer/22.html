@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 22. 链表中倒数第k个节点</h1>
+  <div><a href="https://leetcode-cn.com/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    // 解题的关键是设置快慢两个指针
+    var getKthFromEnd = function(head, k) {
+      if (head === null || k < 0) return null
+
+      let count = 0
+      let fastNode = head, slowNode = head
+      while(fastNode) {
+        fastNode = fastNode.next
+        if (count < k) {
+          // 拉开快指针和慢指针的距离
+          count++
+        } else {
+          slowNode = slowNode.next
+        }
+      }
+
+      return slowNode
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1><font color="red">*</font>剑指 Offer 07. 重建二叉树</h1>
+  <div><a href="https://leetcode-cn.com/problems/zhong-jian-er-cha-shu-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var displayTree = tree => console.log(JSON.stringify(tree, null, 2))
+
+    function TreeNode(val) {
+      this.val = val;
+     this.left = this.right = null;
+    }
+    var buildTree = function(preorder, inorder) {
+      let indexMap = new Map()
+      for(let i = 0; i < inorder.length; i++) {
+        indexMap.set(inorder[i], i)
+      }
+      let root = buildSubTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, indexMap)
+      return root
+    }
+
+    var buildSubTree = function(preorder, preorderStart, preorderEnd, inorder, inorderStart, inorderEnd, indexMap) {
+      if (preorderStart > preorderEnd) {
+        return null
+      }
+
+      let val = preorder[preorderStart]
+      let root = new TreeNode(val)
+      if (preorderStart === preorderEnd) {
+        return root
+      }
+      let rootIndex = indexMap.get(val)
+      let leftNodes = rootIndex - inorderStart
+      let rightNodes = inorderEnd - rootIndex
+      let leftTree = buildSubTree(preorder, preorderStart+1, preorderStart+leftNodes, inorder, inorderStart, rootIndex-1, indexMap)
+      let rightTree = buildSubTree(preorder, preorderEnd-rightNodes+1, preorderEnd, inorder, rootIndex+1, inorderEnd, indexMap)
+      root.left = leftTree
+      root.right = rightTree
+      return root
+    }
+
+    let tree = new buildTree([1,2,3],[3,2,1])
+    displayTree(tree)
+  </script>
+</body>
+</html>

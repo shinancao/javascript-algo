@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 42. 连续子数组的最大和</h1>
+  <div><a href="https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var maxSubArray = function(nums) {
+      if (nums.length === 0) return 0
+      let max = nums[0]
+      let sum = nums[0]
+      for(let i = 1; i < nums.length; i++) {
+        if (sum > 0) {
+          sum += nums[i]
+        } else {
+          sum = nums[i]
+        }
+        max = Math.max(sum, max)
+      }
+      return max
+    }
+  </script>
+</body>
+</html>

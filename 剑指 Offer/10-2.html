@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 10- II. 青蛙跳台阶问题</h1>
+  <div><a href="https://leetcode-cn.com/problems/qing-wa-tiao-tai-jie-wen-ti-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    /**
+    * @param {number} n
+    * @return {number}
+    */
+    var numWays = function(n) {
+      if (n === 0) return 1
+      
+      let x = 1, y = 1, z = 0
+      for(let i = 0; i < n; i++) {
+        z = (x + y) % 1000000007
+        x = y
+        y = z
+      }
+      return x
+    };
+  </script>
+</body>
+</html>

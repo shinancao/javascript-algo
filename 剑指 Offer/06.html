@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 06. 从尾到头打印链表</h1>
+  <div><a href="https://leetcode-cn.com/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var reversePrint = function(head) {
+      if (!head) return []
+      let arr = reversePrint(head.next)
+      arr.push(head.val)
+      return arr
+    }
+  </script>
+</body>
+</html>
