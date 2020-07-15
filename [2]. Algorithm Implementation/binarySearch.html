@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>二分查找</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>二分查找</h1>
+  <ol>
+    <li>使用二分查找的题目特点：数组是排好序的，找某个数，找某个数出现的个数，找某个数所在区间等等。</li>
+    <li>时间复杂度是：O(logn)，空间复杂度是：O(1)。</li>
+    <li>实现过程的技巧：
+      <ol>
+        <li>不管什么情况，都用两端闭合区间，好记。搜索的范围是[left, right]。</li>
+        <li>while(left <= right)结束的条件是left = right + 1。</li>
+        <li>如果数组中的值都比target小，结束时left = arr.lenght。</li>
+        <li>如果数组中的值都比target大，结束时right = -1。</li>
+        <li>写的时候不要写else，就用else if列出每种情况。也不要将等于和其他情况合并，便于分析。</li>
+      </ol>
+    </li>
+  </ol>
+  <script>
+    // 查找某个数是否存在
+    function search(arr, target) {
+      let left = 0, right = arr.length - 1
+      while(left <= right) {
+        let mid = (left + right) >>> 1
+        if (target > arr[mid]) {
+          // 继续搜索右区间 [mid+1, right]
+          left = mid + 1
+        }
+        else if (target < arr[mid]) {
+          // 继续搜索左区间 [left, mid-1]
+          right = mid - 1
+        }
+        else if (target === arr[mid]) {
+          // 找到了
+          return true
+        }
+      }
+      return false
+    }
+
+    // 如果target出现了多次，查找它出现的左边界
+    function leftBound(arr, target) {
+      let left = 0, right = arr.length - 1
+      while(left <= right) {
+        let mid = (left + right) >>> 1
+        if (target > arr[mid]) {
+          //搜右边
+          left = mid + 1
+        }
+        else if (target < arr[mid]) {
+          // 搜左边
+          right = mid - 1
+        } else if (target === arr[mid]) {
+          // 因为查找左边界，所以收缩右边
+          right = mid - 1
+        }
+      }
+
+      // while终止时left = right + 1，left超过了right
+      // left 到了 arr.length 说明整个数组的值都比target小
+      // 如果没有到 arr.length，left会指向第一个大于等于target的位置
+      if (left === arr.length || arr[left] !== target) {
+        // 没有找到
+        return -1
+      } else {
+        return left
+      }
+    }
+
+    // 如果target出现了多次，查找它出现的右边界
+    function rightBound(arr, target) {
+      let left = 0, right = arr.length - 1
+      while(left <= right) {
+        let mid = (left + right) >>> 1
+        if (target > arr[mid]) {
+          left = mid + 1
+        } else if (target < arr[mid]) {
+          right = mid - 1
+        } else if (target === arr[mid]) {
+          // 找右边界，收缩左边
+          left = mid + 1
+        }
+      }
+
+      // right < 0时，说明整个数组的值都比 target 大
+      if (right < 0 || arr[right] !== target) {
+        return - 1
+      } else {
+        return right
+      }
+    }
+
+    // 其实关键就是当left和right指向同一个位置时，看谁移动
+  </script>
+</body>
+</html>
