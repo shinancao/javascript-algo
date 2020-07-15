@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 59 - I. 滑动窗口的最大值</h1>
+  <div><a href="https://leetcode-cn.com/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    class MonotomicQueue {
+      constructor() {
+        this.data = []
+      }
+      enqueue (x) {
+        while(!this.isEmpty() && this.back() < x) {
+          this.data.pop()
+        }
+        this.data.push(x)
+      }
+      dequeue (x) {
+        if (!this.isEmpty() && this.front() === x) {
+          this.data.shift()
+        }
+      }
+      max () {
+        return this.front()
+      }
+      // helper methods
+      front () {
+        if (this.data.length === 0) {
+          return null
+        } else {
+          return this.data[0]
+        }
+      }
+      back () {
+        if (this.data.length === 0) {
+          return null
+        } else {
+          return this.data[this.data.length - 1]
+        }
+      }
+      isEmpty() {
+        return this.data.length === 0
+      }
+    }
+
+    /**
+    * @param {number[]} nums
+    * @param {number} k
+    * @return {number[]}
+    */
+    var maxSlidingWindow = function(nums, k) {
+      let window = new MonotomicQueue()
+      let result = []
+      for(let i = 0; i< nums.length; i++) {
+        if (i < k - 1) {
+          window.enqueue(nums[i])
+        } else {
+          window.enqueue(nums[i])
+          result.push(window.max())
+          window.dequeue(nums[i+ 1 - k])
+        }
+      }
+      return result
+    }
+  </script>
+</body>
+</html>

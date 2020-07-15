@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 61. 扑克牌中的顺子</h1>
+  <div><a href="https://leetcode-cn.com/problems/bu-ke-pai-zhong-de-shun-zi-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var isStraight = function(nums) {
+      // 不能有重复的
+      let set = new Set()
+      let max = 0, min = 14
+      for(let k of nums) {
+        if (k !== 0) {
+          if (set.has(k)) {
+            return false
+          } else {
+            set.add(k)
+          }
+          max = Math.max(k, max)
+          min = Math.min(k, min)
+        }
+      }
+      // 给定了5张牌，max - min小于要么是连续的，要么可以用0替补
+      return max - min < 5
+    }   
+  </script>
+</body>
+</html>

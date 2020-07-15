@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 65. 不用加减乘除做加法</h1>
+  <div><a href="https://leetcode-cn.com/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var add = function(a, b) {
+      while(b != 0) {
+        let plus = a^b // 计算不进位，异或操作，相同为0，相异为1
+        b = ((a&b) << 1) // 计算进位，与操作，都为1才为1，其他情况都是0
+        a = plus
+      }
+      return b // 没有进位时计算结束
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1></h1>
+  <div><a href="" target="_blank">题目入口</a></div>
+  <script>
+    // 方式一，计算差值
+    var missingNumber = function(nums) {
+      let sum = nums.reduce((acc, curr) => acc + curr, 0)
+      let n = nums.length
+      let sum2 = n * (n + 1) >>> 1
+      return sum2 - sum
+    }
+
+    // 方式二，二分法
+    var missingNumber2 = function(nums) {
+      let left = 0, right = nums.length
+      while(left <= right) {
+        let mid = (left + right) >>> 1
+        if (nums[mid] === mid) {
+          left = mid + 1
+        } else {
+          right = mid - 1
+        }
+      }
+      return left
+    }
+  </script>
+</body>
+</html>

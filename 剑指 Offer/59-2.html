@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 59 - II. 队列的最大值</h1>
+  <div><a href="https://leetcode-cn.com/problems/dui-lie-de-zui-da-zhi-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var MaxQueue = function() {
+      this.queue = []
+      this.data = []
+    };
+
+    /**
+    * @return {number}
+    */
+    MaxQueue.prototype.max_value = function() {
+      return this.data.length > 0 ? this.data[0] : -1
+    };
+
+    /** 
+    * @param {number} value
+    * @return {void}
+    */
+    MaxQueue.prototype.push_back = function(value) {
+      this.queue.push(value)
+
+      while(this.data.length > 0 && this.data[this.data.length - 1] < value) {
+        this.data.pop()
+      }
+      this.data.push(value)
+    };
+
+    /**
+    * @return {number}
+    */
+    MaxQueue.prototype.pop_front = function() {
+      let front =  this.queue.length > 0 ? this.queue.shift() : -1
+      if (this.data.length > 0 && front === this.data[0]) {
+        this.data.shift()
+      }
+      return front
+    };
+  </script>
+</body>
+</html>

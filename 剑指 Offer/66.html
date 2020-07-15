@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 66. 构建乘积数组</h1>
+  <div><a href="https://leetcode-cn.com/problems/gou-jian-cheng-ji-shu-zu-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var constructArr = function(a) {
+      if (a.length === 0) return []
+      
+      let b = []
+      b[0] = 1
+      for(let i = 1; i < a.length; i++) {
+        b[i] = b[i - 1] * a[i - 1]
+      }
+      let temp = 1
+      for(let i = a.length - 1; i >= 1; i--) {
+        temp *= a[i]
+        b[i-1] *= temp
+      }
+      return b
+    };
+  </script>
+</body>
+</html>

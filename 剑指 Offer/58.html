@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 58 - I. 翻转单词顺序</h1>
+  <div><a href="https://leetcode-cn.com/problems/fan-zhuan-dan-ci-shun-xu-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    // 解法一：库函数，翻转数组
+    var reverseWords = function(s) {
+      if (!s) return ''
+
+      let words = s.split(' ')
+      let arr = []
+      while(words.length > 0) {
+        let pop = words.pop()
+        if (pop !== '') {
+          arr.push(pop)
+        }
+      }
+      return arr.join(' ')
+    }
+
+    // 解法二：正则，库函数
+    var reverseWords = function(s) {
+      if (!s) return ''
+
+      return s.trim().replace(/\s+/g, ' ').split(' ').reverse().join(' ')
+    }
+
+    // 解法三：双指针遍历
+    var reverseWords = function(s) {
+      if (!s) return ''
+
+      let newStr = ''
+      let i = j = s.length - 1
+      while(i >= 0) {
+        while(i>=0 && s[i] !== ' ') i--
+        newStr = newStr + s.slice(i+1, j+1) + ' '
+        while(i>=0 && s[i] === ' ') i--
+        j = i
+      }
+      return newStr.trim()
+    }
+  </script>
+</body>
+</html>

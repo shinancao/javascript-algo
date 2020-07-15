@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 60. n个骰子的点数</h1>
+  <div><a href="https://leetcode-cn.com/problems/nge-tou-zi-de-dian-shu-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var twoSum = function(n) {
+      let dp = [] // 一个二维数组，i表示骰子的个数，j表示当前朝上的点子总数，dp[i][j]表示出现的次数
+      // 初始化数组
+      for(let i = 1; i <= n; i++) {
+        let temp = []
+        for(let j = 1; j <= 6 * n; j++) {
+          temp[j] = 0
+        }
+        dp[i] = temp
+      }
+      // n = 1时，一个骰子只会出现一次
+      for(let j = 1; j <= 6; j++) {
+        dp[1][j] = 1
+      }
+      // 计算其他个数时各点数出现的次数
+      // 状态转移方程：f(i,j) = f(i-1,j-1)+f(i-1,j-2)+f(i-1,j-3)+f(i-1,j-4)+f(i-1,j-5)+f(i-1,j-6)
+      for(let i = 2; i <= n; i++) {
+        // i表示点数，最小从i开始
+        for(let j = i; j <= 6 * i; j++) {
+          for(let curr = 1; curr <= 6; curr++) {
+            // 因为n-1时，最小的点数总数就是n-1，所以对于本次的点数来说，至少是从上次最小点数n-1开始加的。
+            // i - 1，就是其他骰子都是1的时候
+            if (j - curr >= i - 1) {
+              dp[i][j] += dp[i-1][j-curr]
+            }
+          }
+        }
+      }
+      let all = Math.pow(6, n)
+      let result = []
+      for(let k = n; k <= 6 * n; k++) {
+        result.push(dp[n][k]/all)
+      }
+      return result
+    };
+
+    console.log(twoSum(2))
+
+    // 优化空间，只使用一维数组
+    var twoSum = function(n) {
+      let dp = [] // 一个二维数组，i表示骰子的个数，j表示当前朝上的点子总数，dp[i][j]表示出现的次数
+      // 初始化数组
+      for(let j = 1; j <= 6 * n; j++) {
+        dp[j] = 0
+      }
+      // n = 1时，一个骰子只会出现一次
+      for(let j = 1; j <= 6; j++) {
+        dp[j] = 1
+      }
+      // 状态转移方程：f(j) = f(j-1)+f(j-2)+f(j-3)+f(j-4)+f(j-5)+f(j-6)
+      // i表示点数，最小从i开始
+      for(let i = 2; i <= n; i++) {
+        for(let j = 6 * i; j >= i; j--) {
+          // j位置可能已经存了n-1时的数据，所以需要置为0。
+          dp[j] = 0
+          for(let curr = 1; curr <= 6; curr++) {
+            // i - 1，就是其他骰子都是1的时候
+            if (j - curr >= i - 1) {
+              dp[j] += dp[j-curr]
+            }
+          }
+        }
+      }
+    
+      let all = Math.pow(6, n)
+      let result = []
+      for(let k = n; k <= 6 * n; k++) {
+        result.push(dp[k]/all)
+      }
+      return result
+    };
+  </script>
+</body>
+</html>
