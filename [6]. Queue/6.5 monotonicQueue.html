@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>5.2 monotonic stack</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>单调队列</h1>
+  <ol>
+    <li><a href="https://leetcode-cn.com/problems/sliding-window-maximum/" target="_blank">单调队列</a>是始终保持队列中元素是单调递增或单调递减的队列。</li>
+    <li>应用场景：找到滑动窗口中的最大值。</li>
+    <li>实现的关键步骤：
+      <ol>
+        <li>定义一个单调队列的类，实现enqueue、dequeue、max操作。</li>
+        <li>enqueue时循环判断当前队尾的元素是否比要入队列的元素小，如果是，则删除队尾元素。最后把该元素入队列。</li>
+        <li>dequeue时需要传入移除的值，然后判断是否还在队列中，在的话就移除。如果不在，说明enqueue其他元素时已经移除了。</li>
+        <li>队首元素就是最大值了。</li>
+      </ol>
+    </li>
+  </ol>
+  <script>
+    // 定义单调队列
+    function MonotonicQueue() {
+      this.data = []
+    }
+    MonotonicQueue.prototype.enqueue = function(x) {
+      while(this.data.length > 0 && this.back() < x) {
+        this.data.pop()
+      }
+      this.data.push(x)
+    }
+    MonotonicQueue.prototype.dequeue = function(x) {
+      if (this.data.length > 0 && this.front() === x) {
+        this.data.shift()
+      }
+    }
+    MonotonicQueue.prototype.max = function() {
+      return this.front()
+    }
+    MonotonicQueue.prototype.front = function() {
+      if (this.data === null) {
+        return null
+      } else {
+        return this.data[0]
+      }
+    }
+    MonotonicQueue.prototype.back = function() {
+      if (this.data.length === 0) {
+        return null
+      } else {
+        return this.data[this.data.length - 1]
+      }
+    }
+
+    // 求滑动窗口最大值的问题
+    function maxSlidingWindow(nums, k) {
+      let queue = new MonotonicQueue()
+      let result = []
+      for(let i = 0; i < nums.length; i++) {
+        if (i < k - 1) {
+          // 一开始先进 k-1 个元素
+          queue.enqueue(nums[i])
+        } else {
+          // 再进一个，此时窗口中k个元素
+          queue.enqueue(nums[i])
+          // 当前窗口中的最大值
+          let max = queue.max()
+          result.push(max)
+          //移除窗口中最后一个，等待下次窗口中元素达到3个
+          queue.dequeue(nums[i+1-k])
+        }
+      }
+      return result
+    }
+
+    console.log(maxSlidingWindow([-7,-8,7,5,7,1,6,0], 4))
+  </script>
+</body>
+</html>
