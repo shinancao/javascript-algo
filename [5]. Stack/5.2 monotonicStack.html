@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>5.2 monotonic stack</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>单调栈</h1>
+  <ol>
+    <li><a href="https://labuladong.gitbook.io/algo/shu-ju-jie-gou-xi-lie/dan-tiao-zhan" target="_blank">单调栈</a>就是通过在入栈和出栈时做一些调整，使用栈内的元素保持单调递增或单调递减。</li>
+    <li>应用场景：获取数组中当前元素的下一个最近的最大或最小元素（Next Greater Number）。</li>
+    <li>实现的关键步骤：
+      <ol>
+        <li>从数组末端开始遍历。</li>
+        <li>循环踢出栈内比i位置小于等于的元素。</li>
+        <li>取栈顶元素放入结果中，如果空则放-1。</li>
+      </ol>
+    </li>
+  </ol>
+  <script>
+    function nextGreaterElement(nums) {
+      const result = []
+      const stack = []
+      for(let i = nums.length - 1; i >= 0; i--) {
+        while(stack.length > 0 && stack[stack.length - 1] <= nums[i]) {
+          stack.pop()
+        }
+        result[i] = stack.length === 0 ? -1 : stack[stack.length - 1]
+        stack.push(nums[i])
+      }
+
+      return result
+    }
+    console.log(nextGreaterElement([2, 1, 2, 4, 3]))
+  </script>
+</body>
+</html>
