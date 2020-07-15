@@ -18,7 +18,9 @@
 <body>
   <h1>深度优先搜索（DFS）二叉树</h1>
   <ol>
-    <li>深度优先所有一般分为前序遍历、中序遍历、后序遍历，已打印根节点的位置来判读是哪种遍历。</li></ol>
+    <li>深度优先所有一般分为前序遍历、中序遍历、后序遍历，已打印根节点的位置来判读是哪种遍历。</li>
+    <li>中序遍历（左根右）得到的是正序排列，所以如果要得到倒序排列，用右根左即可遍历即可了。</li>
+  </ol>
   <script>
     var displayTree = tree => console.log(JSON.stringify(tree, null, 2))
     function Node(value) {
