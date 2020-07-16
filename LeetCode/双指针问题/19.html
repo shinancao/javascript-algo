@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>19. 删除链表的倒数第N个节点</h1>
+  <div><a href="https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/" target="_blank">题目入口</a></div>
+  <script>
+    var removeNthFromEnd = function(head, n) {
+      let dummy = new ListNode(-1)
+      dummy.next = head
+      let fast = slow = dummy
+      // fast往前走了n+1步
+      for(let i = 1; i <= n + 1; i++) {
+        fast = fast.next
+      }
+
+      while(fast) {
+        fast = fast.next
+        slow = slow.next
+      }
+
+      slow.next = slow.next.next
+      return dummy.next
+    }
+  </script>
+</body>
+</html>

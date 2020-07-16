@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>167. 两数之和 II - 输入有序数组</h1>
+  <div><a href="https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/" target="_blank">题目入口</a></div>
+  <o>
+    <li>遇到<strong front="bold">有序数组</strong>时先思考是否要用双指针解决。</li>
+  </o>
+  <script>
+    var twoSum = function(numbers, target) {
+      let left = 0, right = numbers.length - 1
+      while(left < right) {
+        let sum = numbers[left] + numbers[right]
+        if (sum < target) {
+          left++ // 让sum大一点
+        } else if (sum > target) {
+          right-- // 让sum小一点
+        } else {
+          return [left+1, right+1]
+        }
+      }
+      return [-1, -1]
+    }
+  </script>
+</body>
+</html>

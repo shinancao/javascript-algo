@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>170. 两数之和 III - 数据结构设计</h1>
+  <div><a href="https://blog.csdn.net/ft_sunshine/article/details/103807993" target="_blank">题目入口</a></div>
+  <script>
+    class TwoSum {
+      constructor() {
+        this.list = []
+        this.sum = new Set()
+      }
+
+      add(val) {
+        // 加进来的时候就计算好和
+        for(const x of this.list) {
+          this.sum.add(x + val)
+        }
+        this.list.push(val)
+      }
+
+      find(target) {
+        // Set 查找、插入、删除的时间复杂度为O(1)
+        return this.sum.has(target)
+      }
+    }
+
+    let twoSum = new TwoSum()
+    twoSum.add(1)
+    twoSum.add(2)
+    twoSum.add(3)
+  </script>
+</body>
+</html>

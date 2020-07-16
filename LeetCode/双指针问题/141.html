@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>141. 环形链表</h1>
+  <div><a href="https://leetcode-cn.com/problems/linked-list-cycle/" target="_blank">题目入口</a></div>
+  <ol>
+    <li>快慢指针一般用于解决链表相关的问题。</li>
+    <li>相关的题目有：判断是否存在环、环开始的位置、链表的中点、倒数第K个节点等。</li>
+    <li>如果快指针走的是慢指针的两倍，则相遇时慢指针走了k步，快指针走了2k步。</li>
+  </ol>
+  <script>
+    var hasCycle = function(head) {
+      let fast = slow = head
+      while(fast !== null && fast.next !== null) {
+        // 快指针比慢指针
+        fast = fast.next.next
+        slow = slow.next
+
+        if (slow === fast) return true
+      }
+      return false
+    }
+  </script>
+</body>
+</html>

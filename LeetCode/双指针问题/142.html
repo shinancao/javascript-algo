@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>142. 环形链表 II</h1>
+  <div><a href="https://leetcode-cn.com/problems/linked-list-cycle-ii/" target="_blank">题目入口</a></div>
+  <script>
+    var detectCycle = function(head) {
+      let fast = slow = head
+      while(fast !== null && fast.next !== null) {
+        fast = fast.next.next
+        slow = slow.next
+
+        if (slow === fast) break
+      }
+
+      if (fast === null || fast.next === null) {
+        // 不存在环
+        return null
+      } else {
+        slow = head
+        while(slow !== fast) {
+          slow = slow.next
+          fast = fast.next
+        }
+
+        return slow
+      }
+    }
+  </script>
+</body>
+</html>

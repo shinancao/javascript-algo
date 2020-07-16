@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>1. 两数之和</h1>
+  <div><a href="https://leetcode-cn.com/problems/two-sum/" target="_blank">题目入口</a></div>
+  <ol>
+    <li>这类题目的特点是数组是无序的，所以优化的关键是利用Map或Set缓存计算结果。</li>
+  </ol>
+  <script>
+    var twoSum = function(nums, target) {
+      let map = new Map()
+      for (let i = 0; i < nums.length; i++) {
+        map.set(nums[i], i)
+      }
+
+      for(let i = 0; i < nums.length; i++) {
+        let other = target - nums[i]
+        if (map.has(other) && map.get(other) !== i) {
+          let j = map.get(other)
+          return [i, j]
+        }
+      }
+      return [-1, -1]
+    }
+
+    // 如果题目让返回的是true或false，而不是下标，可以将map换成set
+    var twoSum2 = function(nums, target) {
+      let set = new Set() // set中存的是当前值与target的差
+      set.add(target - nums[0])
+      for(let i = 1; i < nums.length; i++) {
+        if (set.has(nums[i])) {
+          return true
+        } else {
+           set.add(target - nums[i])
+        }
+      }
+      return false
+    }
+  </script>
+</body>
+</html>
