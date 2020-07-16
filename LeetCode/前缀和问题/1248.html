@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>1248. 统计「优美子数组」</h1>
+  <div><a href="https://leetcode-cn.com/problems/count-number-of-nice-subarrays/" target="_blank">题目入口</a></div>
+  <script>
+    var numberOfSubarrays = function(nums, k) {
+      const n = nums.length
+      const map = new Map() // key为奇数的个数，value为出现的次数
+      map.set(0, 1)
+      let pre = 0, count = 0
+      for(const x of nums) {
+        pre += (x % 2 ? 1 : 0)
+        if (map.has(pre - k)) {
+          count += map.get(pre - k)
+        }
+        if (map.has(pre)) {
+          map.set(pre, map.get(pre) + 1)
+        } else {
+          map.set(pre, 1)
+        }
+      }
+      return count
+    }
+  </script>
+</body>
+</html>

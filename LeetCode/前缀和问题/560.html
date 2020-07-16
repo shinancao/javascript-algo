@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>560. 和为K的子数组</h1>
+  <div><a href="https://leetcode-cn.com/problems/subarray-sum-equals-k/" target="_blank">题目入口</a></div>
+  <script>
+    var subarraySum = function(nums, k) {
+      let n = nums.length
+      // 前缀和数组
+      let sum = []
+      sum[0] = 0
+      for(let i = 0; i < n; i++) {
+        sum[i+1] = sum[i] + nums[i]
+      }
+      
+      // 遍历求子数组个数
+      let counter = 0
+      for(let i = 1; i <= n; i++) {
+        for(let j = 0; j < i; j++) {
+          // 求nums[j...i-1]的和
+          if (sum[i] - sum[j] === k) counter++
+        }
+      }
+      return counter
+    }
+    console.log(subarraySum([1,2,3], 3))
+
+    //优化的思路是：我直接记录下有几个 sum[j] 和 sum[i] - k 相等，直接更新结果，就避免了内层的 for 循环。
+    var subarraySum2 = function(nums, k) {
+      const map = new Map() // 使用map缓存，key为前缀合的值，value为出现的次数
+      map.set(0, 1) // 在0位置，前面没有值，和为0，出现一次。这样也保证了在数组中某个值等于k时，可以计算到1次。
+      let count = 0, pre = 0
+      for(const x of nums) {
+        // 求前缀和
+        pre += x
+
+        if (map.has(pre - k)) {
+          // 如果之前有前缀和能够满足等于pre-k，那一定存在一个连续子数组的和，才能使得它加上 k 等于pre。
+          // 比如([1,2,3], 5)，当pre=6时，pre-5=1
+          count += map.get(pre - k)
+        }
+
+        // 必须放在后面存储
+        if (map.has(pre)) {
+          map.set(pre, map.get(pre) + 1)
+        } else {
+          map.set(pre, 1)
+        }
+      }
+      return count
+    }
+
+    console.log(subarraySum2([1,2,3], 3))
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>454. 四数相加 II</h1>
+  <div><a href="https://leetcode-cn.com/problems/4sum-ii/" target="_blank">题目入口</a></div>
+  <script>
+    var fourSumCount = function(A, B, C, D) {
+      let map = new Map() // 缓存A, B的和
+      for(let i = 0; i < A.length; i++) {
+        for(let j = 0; j < B.length; j++) {
+          let key = A[i] + B[j]
+          if(map.has(key)) {
+            map.set(key, map.get(key) + 1)
+          } else {
+            map.set(key, 1)
+          }
+        }
+      }
+
+      let count = 0
+      for(let i = 0; i < C.length; i++) {
+        for(let j = 0; j < D.length; j++) {
+          let key = -(C[i] + D[j])
+          if (map.has(key)) {
+            count += map.get(key)
+          }
+        }
+      }
+      return count
+    }
+  </script>
+</body>
+</html>
