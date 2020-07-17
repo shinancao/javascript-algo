@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol, li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>191. 位1的个数</h1>
+  <o>
+    <li><a href="https://leetcode-cn.com/problems/number-of-1-bits/" target="_blank">题目入口</a></li>
+    <li>n & (n - 1) 可以消掉n的二进制中的一个1。</li>
+  </o>
+  <script>
+    var hammingWeight = function(n) {
+      let res = 0
+      while(n != 0) {
+        n = n & (n-1)
+        res++
+      }
+      return res
+    }
+  </script>
+</body>
+</html>

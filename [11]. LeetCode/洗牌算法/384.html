@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol, li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>384. 打乱数组</h1>
+  <o>
+    <li><a href="https://leetcode-cn.com/problems/shuffle-an-array/" target="_blank">题目入口</a></li>
+  </o>
+  <script>
+    var Solution = function(nums) {
+      this.array = nums
+    };
+
+    /**
+    * Resets the array to its original configuration and return it.
+    * @return {number[]}
+    */
+    Solution.prototype.reset = function() {
+      return this.array
+    };
+
+    /**
+    * Returns a random shuffling of the array.
+    * @return {number[]}
+    */
+    Solution.prototype.shuffle = function() {
+      let arr = [].concat(this.array)
+      let i = arr.length
+      while(i) {
+        let rand = Math.floor(Math.random() * i--)
+        this.swap(arr, i, rand)
+      }
+      return arr
+    };
+
+    Solution.prototype.swap = function(arr, x, y) {
+      [arr[x], arr[y]] = [arr[y], arr[x]]
+    }
+  </script>
+</body>
+</html>
