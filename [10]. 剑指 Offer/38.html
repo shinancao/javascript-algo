@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 38. 字符串的排列</h1>
+  <div><a href="https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var permutation = function(s) {
+      let set = new Set()
+      let arr = s.split('')
+      
+      var recur = function(arr, from, to) {
+        if (from < 0 || to > arr.length || from > to) return
+        if (from === to) {
+          set.add(arr.join(''))
+        } else {
+          for(let i = from; i <= to; i++) {
+            swap(arr, from, i)
+            recur(arr, from + 1, to)
+            swap(arr, i, from)
+          }
+        }
+      }
+
+      recur(arr, 0, arr.length - 1)
+      return [...set]
+    };
+
+    var swap = function(arr, x, y) {
+      [arr[x], arr[y]] = [arr[y], arr[x]]
+    }
+  </script>
+</body>
+</html>

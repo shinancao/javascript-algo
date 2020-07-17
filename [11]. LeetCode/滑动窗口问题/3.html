@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>76. 最小覆盖子串</h1>
+  <ol>
+    <li><a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/" target="_blank">题目入口</a></li>
+    <li>窗口的区间是[left, right)，当前right指向的位置不在窗口内。</li>
+    <li>这个题目就不是在收缩窗口时更新result了，而是在收缩过程结束后，所以要灵活判断。</li>
+    <li>之所以移动窗口能找到最小或最长子串，是因为在移动的过程中不断在更新result。</li>
+    <li>判断收缩窗口的条件是关键。</li>
+  </ol>
+  
+  <script>
+    var lengthOfLongestSubstring = function(s) {
+      let window = new Map()
+      let left = right = 0
+      let result = 0  // 存储得到的子串长度
+      while(right < s.length) {
+        let c = s[right]
+        right++
+        if (window.has(c)) {
+          window.set(c, window.get(c) + 1)
+        } else {
+          window.set(c, 1)
+        }
+
+        while(window.get(c) > 1) {
+          // 出现重复的，开始收缩
+          let d = s[left]
+          left++
+          window.set(d, window.get(d) - 1)
+        }
+
+        result = Math.max(result, right - left)
+      }
+      return result
+    }
+  </script>
+</body>
+</html>

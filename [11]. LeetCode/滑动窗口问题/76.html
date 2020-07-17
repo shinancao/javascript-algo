@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>76. 最小覆盖子串</h1>
+  <ol>
+    <li><a href="https://leetcode-cn.com/problems/minimum-window-substring/" target="_blank">题目入口</a></li>
+    <li>窗口的区间是[left, right)，当前right指向的位置不在窗口内。</li>
+    <li>在收缩窗口时判断是否满足返回条件。</li>
+  </ol>
+  
+  <script>
+    var minWindow = function(s, t) {
+      let window = new Map()
+      let need = new Map()
+      for (const char of t) {
+        if (need.has(char)) {
+          need.set(char, need.get(char) + 1)
+        } else {
+          need.set(char, 1)
+        }
+      }
+
+      let start = 0, len = Infinity
+      let left = 0, right = 0
+      let valid = 0
+      while(right < s.length) {
+        let char  = s[right]
+        right++
+        if (need.has(char)) {
+          if (window.has(char)) {
+            window.set(char, window.get(char) + 1)
+          } else {
+            window.set(char, 1)
+          }
+          if (need.get(char) === window.get(char)) {
+            valid++
+          }
+        }
+
+        while(valid === need.size) {
+          if (right - left < len) {
+            start = left
+            len = right - left
+          }
+          let d = s[left]
+          left++
+          if (need.has(d)) {
+            if (need.get(d) === window.get(d)) {
+              valid--
+            }
+            window.set(d, window.get(d) - 1)
+          }
+        }
+      }
+
+      return right === Infinity ? '' : s.slice(start, start + len)
+    }
+
+    console.log(minWindow('ADOBECODEBANC', 'ABC'))
+  </script>
+</body>
+</html>

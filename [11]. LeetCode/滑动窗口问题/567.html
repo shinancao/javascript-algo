@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>76. 最小覆盖子串</h1>
+  <ol>
+    <li><a href="https://leetcode-cn.com/problems/permutation-in-string/" target="_blank">题目入口</a></li>
+    <li>窗口的区间是[left, right)，当前right指向的位置不在窗口内。</li>
+    <li>在收缩窗口时判断是否满足返回条件。</li>
+  </ol>
+  
+  <script>
+    var checkInclusion = function(s1, s2) {
+      let window = new Map()
+      let need = new Map()
+      for(let c of s1) {
+        if (need.has(c)) {
+          need.set(c, need.get(c) + 1)
+        } else {
+          need.set(c, 1)
+        }
+      }
+      let left = right = 0
+      let valid = 0
+      while(right < s2.length) {
+        let c = s2[right]
+        right++
+        // 此时c在窗口内
+        if (need.has(c)) {
+          if (window.has(c)) {
+            window.set(c, window.get(c) + 1)
+          } else {
+            window.set(c, 1)
+          }
+          if (need.get(c) === window.get(c)) {
+            valid++
+          }
+        }
+
+        while(right - left >= s1.length) {
+          // 要找的子串的长度和目前串相同，所以超过时要收缩窗口
+          if (valid === need.size) {
+            return true
+          }
+          let d = s2[left]
+          left++
+          // 此时d被滑出窗口
+          if (need.has(d)) {
+            if (window.get(d) === need.get(d)) {
+              valid--
+            }
+            window.set(d, window.get(d) - 1)
+          }
+        }
+      }
+
+      return false
+    }
+    console.log(checkInclusion("ab", "eidbaooo"))
+  </script>
+</body>
+</html>
