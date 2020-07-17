@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>215. 数组中的第K个最大元素</h1>
+  <div><a href="https://leetcode-cn.com/problems/kth-largest-element-in-an-array/" target="_blank">题目入口</a></div>
+  <script>
+    var findKthLargest = function(nums, k) {
+      return quicksort(nums, 0, nums.length - 1, nums.length - k)
+    };
+
+    // 用快排解决
+    var quicksort = function(nums, left, right, index) {
+      if (left > right) return null
+
+      let p = partition(nums, left, right)
+      if (p === index) {
+        return nums[index]
+      } else if (p < index) {
+        // 搜右边
+        return quicksort(nums, p + 1, right, index)
+      } else {
+        return quicksort(nums, left, p - 1, index)
+      }
+    }
+
+    var partition = function(nums, left, right) {
+      let pivot = nums[right]
+      let shift = left
+      for(let i = left; i < right; i++) {
+        if (nums[i] < pivot) {
+          // 一点点倒腾，不断把比pivot小的放在shift位置。
+          swap(nums, shift, i)
+          shift++
+        }
+      }
+      swap(nums, shift, right)
+      return shift
+    }
+
+    var swap = function(arr, x, y) {
+      [arr[x], arr[y]] = [arr[y], arr[x]]
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 16. 数值的整数次方</h1>
+  <div><a href="https://leetcode-cn.com/problems/shu-zhi-de-zheng-shu-ci-fang-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var myPow = function(x, n) {
+      if (n < 0) {
+        return 1 / pow(x, -n)
+      }
+      return pow(x, n)
+    };
+
+    var pow = function(x, n) {
+      if (n === 0) return 1
+      if (x === 1) return 1
+
+      if (n % 2 === 0) {
+        let res = pow(x, n / 2)
+        return res * res
+      } else {
+        let res = pow(x, (n - 1) / 2)
+        return res * res * x
+      }
+    }
+  </script>
+</body>
+</html>

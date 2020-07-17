@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>437. 路径总和 III</h1>
+  <div><a href="https://leetcode-cn.com/problems/path-sum-iii/" target="_blank">题目入口</a></div>
+  <script>
+    var pathSum = function(root, sum) {
+      if (root === null) return 0
+
+      let rootCount = count(root, sum)
+      let leftSum = pathSum(root.left, sum)
+      let rightSum = pathSum(root.right, sum)
+
+      return leftSum + rightSum + rootCount
+    }
+
+    // 以root.val为开头的，能达到sum的路径个数
+    var count = function(root, sum) {
+      if (root === null) return 0
+      let isMe = (root.val === sum) ? 1 : 0
+      let leftCount = count(root.left, sum - root.val)
+      let rightCount = count(root.right, sum - root.val)
+      return isMe + leftCount + rightCount
+    } 
+  </script>
+</body>
+</html>
