@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>8.5 creat binary tree</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    ol,li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>用数组创建二叉树</h1>
+  <ol>
+  </ol>
+  <script>
+    function TreeNode(val) {
+      this.val = val
+      this.left = this.right = null
+    }
+    function createTree(arr, i = 0) {
+      if (i >= arr.length || arr[i] === null) return null
+
+      let root = new TreeNode(arr[i])
+
+      root.left = createTree(arr, 2 * i + 1)
+      root.right = createTree(arr, 2 * i + 2)
+    
+      return root
+    }
+
+    let tree = createTree([2, 1, 4, 7, null, 5, 8])
+    console.log(tree)
+  </script>
+</body>
+</html>
