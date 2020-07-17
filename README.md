@@ -46,3 +46,7 @@
 
 * 9.2 实现用小顶堆排序
 
+## [[10]. 剑指 Offer](https://github.com/shinancao/javascript-algo/tree/master/%5B10%5D.%20%E5%89%91%E6%8C%87%20Offer)
+
+## [[11]. LeetCode](https://github.com/shinancao/javascript-algo/tree/master/%5B11%5D.%20LeetCode)
+
