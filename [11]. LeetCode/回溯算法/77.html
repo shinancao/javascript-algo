@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>77. 组合</h1>
+  <div><a href="https://leetcode-cn.com/problems/combinations/" target="_blank">题目入口</a></div>
+  <script>
+    let result = []
+    var combine = function(n, k) {
+      result = []
+      let track = new Set()
+      backtrack(n, k, 1, track)
+      return result
+    }
+    var backtrack = function(n, k, start, track) {
+      if (track.size === k) {
+        result.push([...track])
+        return
+      }
+
+      for (let i = start; i <= n; i++) {
+        track.add(i)
+        backtrack(n, k, i + 1, track)
+        track.delete(i)
+      }
+    }
+
+    console.log(combine(4, 2))
+  </script>
+</body>
+</html>

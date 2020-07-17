@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>37. 解数独</h1>
+  <div><a href="https://leetcode-cn.com/problems/sudoku-solver/" target="_blank">题目入口</a></div>
+  <script>
+    let result = []
+    var solveSudoku = function(board) {
+      result = []
+      backtrack(board, 0, 0)
+      for (let i = 0; i < 9; i++) {
+        board[i] = result[i]
+      }
+    };
+
+    // 对 board[i][j] 进行穷举尝试
+    // 先每一行找，一行找完再换下一行找
+    var backtrack = function(board, i, j) {
+      let m = n = 9
+
+      if (j === n) {
+        backtrack(board, i + 1, 0)
+        return
+      }
+
+      if (i === m) {
+        // 所有行都找完了
+        for(let i = 0; i < m; i++) {
+          result.push(board[i].slice(0))
+        }
+        return true
+      }
+
+      if (board[i][j] !== '.') {
+        // 已经有数字了，找下一个位置
+        backtrack(board, i, j + 1)
+        return
+      }
+
+      // 1...9 挨个试
+      for (let char = 1; char <= 9; char++) {
+        let c = char.toString()
+        if (isValid(board, c, i, j)) {
+          board[i][j] = c
+          if (backtrack(board, i, j + 1)) {
+            return true
+          }
+          
+          board[i][j] = '.'
+        }
+      }
+    }
+
+    var isValid = function(board, char, row, col) {
+      for (let i = 0; i < 9; i++) {
+        if (board[row][i] === char) return false // 同一行不能出现相同的
+        if (board[i][col] === char) return false // 同一列不能出现相同的
+        let x = Math.floor(row / 3) * 3 + Math.floor(i / 3)
+        let y = Math.floor(col / 3) * 3 + Math.floor(i % 3)
+        if (board[x][y] === char) return false // 3x3方格内不能出现重复的
+      }
+
+      return true
+    }
+
+    let b = [["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]
+    solveSudoku(b)
+  </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>51. N皇后</h1>
+  <div><a href="https://leetcode-cn.com/problems/n-queens/" target="_blank">题目入口</a></div>
+  <script>
+    let result = [] // 返回结果是一个二维数组
+    var solveNQueens = function(n) {
+      result = []
+      let board = []
+      for(let i = 0; i < n; i++) {
+        let temp = []
+        for (let j = 0; j < n; j++) {
+          temp.push('.')
+        }
+        board.push(temp)
+      }
+      backtrack(board, 0)
+      return result
+    };
+
+    // 当前要从row行选择位置
+    // 已经选过的位置存在board中
+    var backtrack = function(board, row) {
+      if(row === board.length) {
+        // 所有行都放置完了
+        let strArr = board.map(arr => arr.join(''))
+        result.push(strArr)
+        return
+      }
+
+      let n = board[row].length
+      for (let col = 0; col < n; col++) {
+        if (isValid(board, row, col)) {
+          //当前位置可放
+          board[row][col] = 'Q'
+
+          // 进行下一阶段的决策
+          backtrack(board, row + 1)
+
+          // 撤销选择
+          board[row][col] = '.'
+        }
+      }
+    }
+
+    var isValid = function(board, row, col) {
+      let n = board.length
+
+      // 判断同一列上是否已经有皇后了
+      for (let i = 0; i < n; i++) {
+        if (board[i][col] === 'Q') {
+          return false
+        }
+      }
+
+      // 判断左上方是否已经皇后了
+      for (let i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+        if (board[i][j] === 'Q') {
+          return false
+        }
+      }
+
+      // 判断右上方是否已经有皇后了
+      for (let i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
+        if (board[i][j] === 'Q') {
+          return false
+        }
+      }
+
+      return true
+    } 
+  </script>
+</body>
+</html>

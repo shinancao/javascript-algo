@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>78. 子集</h1>
+  <div><a href="https://leetcode-cn.com/problems/subsets/" target="_blank">题目入口</a></div>
+  <script>
+    let result = []
+    var subsets = function(nums) {
+      result = []
+      let track = new Set()
+      backtrack(nums, track, 0)
+      return result
+    };
+
+    var backtrack = function(nums, track, start) {
+      result.push([...track])
+
+      for (let i = start; i < nums.length; i++) {
+        let k = nums[i]
+        track.add(k)
+        backtrack(nums, track, i + 1)
+        track.delete(k)
+      }
+    }
+
+    subsets([1,2,3])
+  </script>
+</body>
+</html>

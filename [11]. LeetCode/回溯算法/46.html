@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>46. 全排列</h1>
+  <div><a href="https://leetcode-cn.com/problems/permutations/" target="_blank">题目入口</a></div>
+  <script>
+    let result = []
+    var permute = function(nums) {
+      result = []
+      let track = new Set()
+      backtrack(nums, track)
+      return result
+    }
+    var backtrack = function(nums, track) {
+      if (nums.length === track.size) {
+        result.push([...track])
+        return
+      }
+
+      for (let i = 0; i < nums.length; i++) {
+        if (!track.has(nums[i])) {
+          // 当前元素还不在已选路径中
+          // 选择它
+          track.add(nums[i])
+          // 下一阶段的选择
+          backtrack(nums, track)
+          // 撤销选择
+          track.delete(nums[i])
+        }
+      }
+    }
+  </script>
+</body>
+</html>

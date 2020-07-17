@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>22. 括号生成</h1>
+  <div><a href="https://leetcode-cn.com/problems/generate-parentheses/" target="_blank">题目入口</a></div>
+  <script>
+    var generateParenthesis = function(n) {
+      let result = []
+      let track = []
+      backtrack(n, n, track, result)
+      return result
+    }
+
+    var backtrack = function(left, right, track, result) {
+      if (right < left) return
+      if (left < 0 || right < 0) return
+      if (left === 0 && right === 0) {
+        // 左右括号的位置都放完了
+        result.push(track.join(''))
+        return
+      }
+
+      // 放左括号
+      track.push('(')
+      backtrack(left - 1, right, track, result)
+      track.pop()
+
+      // 放右括号
+      track.push(')')
+      backtrack(left, right - 1, track, result)
+      track.pop()
+    }
+  </script>
+</body>
+</html>
