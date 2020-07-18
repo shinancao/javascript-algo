@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 31. 栈的压入、弹出序列</h1>
+  <div><a href="https://leetcode-cn.com/problems/zhan-de-ya-ru-dan-chu-xu-lie-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var validateStackSequences = function(pushed, popped) {
+      let stack = []
+      let i = 0
+      for (const num of pushed) {
+        stack.push(num)
+        // 判断当前元素是否在弹出栈的对应位置，是的话就弹出
+        while(stack.length > 0 && stack[stack.length - 1] === popped[i]) {
+          stack.pop()
+          i++
+        }
+      }
+      return stack.length === 0
+    }
+  </script>
+</body>
+</html>

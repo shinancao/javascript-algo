@@ -20,7 +20,31 @@
   <h1>剑指 Offer 34. 二叉树中和为某一值的路径</h1>
   <div><a href="https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/" target="_blank">题目入口</a></div>
   <script>
-    
+    var pathSum = function(root, sum) {
+      let result = []
+      let track = []
+      backtrack(root, sum, track, result)
+      return result
+    };
+
+    var backtrack = function(root, tar, track, result) {
+      if (root === null) return
+
+      // track.push(root.val)
+
+      track = [...track, root.val]
+
+      if (tar === root.val && root.left === null && root.right === null) {
+        // 找到一条从根到节点的路径
+        result.push(track.slice(0))
+        return
+      }
+
+      backtrack(root.left, tar - root.val, track, result)
+      backtrack(root.right, tar - root.val, track, result)
+
+      // track.pop()
+    }
   </script>
 </body>
 </html>
