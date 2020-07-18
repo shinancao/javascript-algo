@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 26. 树的子结构</h1>
+  <div><a href="https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var isSubStructure = function(A, B) {
+      if (A === null || B === null) return false
+      if (isSubStructureWithA(A, B)) return true
+      // B在A的左子树的结构中，或者B在A的右子树的结构中
+      return isSubStructure(A.left, B) || isSubStructure(A.right, B)
+    };
+
+    // 判断已nodeA为根节点的子结构，是否包含了nodeB，或者完全和nodeB一样
+    var isSubStructureWithA = function(nodeA, nodeB) {
+      // nodeB已经为空了，还没结束，说明nodeA包含了nodeB
+      if (nodeB === null) return true
+      if (nodeA === null) return false
+      if (nodeA.val !== nodeB.val) return false
+      return isSubStructureWithA(nodeA.left, nodeB.left) && isSubStructureWithA(nodeA.right, nodeB.right)
+    }
+  </script>
+</body>
+</html>
