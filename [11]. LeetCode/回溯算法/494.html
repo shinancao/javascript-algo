@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>494. 目标和</h1>
+  <div><a href="https://leetcode-cn.com/problems/target-sum/" target="_blank">题目入口</a></div>
+  <script>
+    /**
+    * @param {number[]} nums
+    * @param {number} S
+    * @return {number}
+    */
+    var findTargetSumWays = function(nums, S) {
+      let memo = new Map()
+      return backtrack(nums, S, 0, memo)
+    };
+
+    var backtrack = function(nums, rest, i, memo) {
+      if (i === nums.length) {
+        if (rest === 0) {
+          return 1
+        } else {
+          return 0
+        }
+      }
+
+      let key = i + ',' + rest
+
+      if (memo.has(key)) {
+        return memo.get(key)
+      }
+
+      let result = backtrack(nums, rest - nums[i], i+1, memo) + backtrack(nums, rest + nums[i], i+1, memo)
+
+      memo.set(key, result)
+
+      return result
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>322. 零钱兑换</h1>
+  <div><a href="https://leetcode-cn.com/problems/coin-change/" target="_blank">题目入口</a></div>
+  <script>
+    var coinChange = function(coins, amount) {
+      // 1. 初始化dp： i 表示金额，dp[i]表示金额为i时需要的最少的硬币
+      const dp = Array.from({length: amount + 1}).fill(Infinity)
+      // 2. base case
+      dp[0] = 0
+      // 3. 状态转移
+      for (let i = 1; i <= amount; i++) {
+        for (let coin of coins) {
+          if (i - coin >= 0) {
+            // 状态转移方程
+            dp[i] = Math.min(dp[i], dp[i - coin] + 1)
+          }
+        }
+      }
+
+      return dp[amount] === Infinity ? -1 : dp[amount]
+    }
+  </script>
+</body>
+</html>
