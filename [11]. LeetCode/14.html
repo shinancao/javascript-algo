@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>14. 最长公共前缀</h1>
+  <div><a href="" target="_blank">题目入口</a></div>
+  <script>
+    var longestCommonPrefix = function(strs) {
+      if (!strs || strs.length === 0) return ''
+
+      let len = strs[0].length // 第一个字符串的长度
+      let count = strs.count // 字符串的个数
+
+      for (let i = 0; i < len; i++) {
+        let c = strs[0][i]
+        for (let j = 1; j < count; j++) {
+          // 出现不符合条件的就结束比较
+          if (i === strs[j].length || strs[j][i] !== c) {
+            return strs[0].slice(0, i)
+          }
+        }
+      }
+
+      return strs[0]
+    }
+
+    console.log(longestCommonPrefix(["flower","flow","flight"]))
+  </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>LeetCode</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>146. LRU缓存机制</h1>
+  <div><a href="https://leetcode-cn.com/problems/lru-cache/" target="_blank">题目入口</a></div>
+  <script>
+    // 实现一个非循环双链表
+    var Node = function(key, val) {
+      this.key = key
+      this.val = val
+      this.prev = this.next = null
+    }
+
+    var DoublyList = function() {
+      this.head = null
+      this.tail = null
+      this.count = 0
+    }
+
+    DoublyList.prototype.addFirst = function(node) {
+      if (this.head === null) {
+        this.head = this.tail = node
+      } else {
+        node.next = this.head
+        this.head.prev = node
+        this.head = node
+      }
+      this.count++
+    }
+
+    DoublyList.prototype.remove =function(node) {
+      let prev = node.prev
+      let next = node.next
+      if (prev) {
+        prev.next = next
+      } else {
+        // 删除的就是head
+        this.head = next
+      }
+      if (next) {
+        next.prev = prev
+      } else {
+        // 删除的是tail
+        this.tail = prev
+      }
+
+      node.prev = null
+      node.next = null
+
+      this.count--
+    }
+
+    DoublyList.prototype.removeLast = function() {
+      if (this.tail === null) return null
+
+      let tail = this.tail
+      if (tail.prev) {
+        tail.prev.next = null
+      }
+      
+      this.tail = tail.prev
+      
+      tail.prev = null
+
+      this.count--
+
+      return tail
+    }
+
+    DoublyList.prototype.size = function() {
+      return this.count
+    }
+
+    /**
+    * @param {number} capacity
+    */
+    var LRUCache = function(capacity) {
+      this.capacity = capacity
+      this.map = new Map()
+      this.cache = new DoublyList()
+    };
+
+    /** 
+    * @param {number} key
+    * @return {number}
+    */
+    LRUCache.prototype.get = function(key) {
+      if (!this.map.has(key)) {
+        return -1
+      } else {
+        let val = this.map.get(key).val
+        // 将节点提前
+        this.put(key, val)
+        return val
+      }
+    };
+
+    /** 
+    * @param {number} key 
+    * @param {number} value
+    * @return {void}
+    */
+    // 如果已经有了，就先删除，再插入前面，如果还没有直接插入前面，但是超过了缓存大小后，将最后面的剔除。
+    LRUCache.prototype.put = function(key, val) {
+      let node = new Node(key, val)
+      if (this.map.has(key)) {
+        // 删除旧的节点
+        this.cache.remove(this.map.get(key))
+        // 新节点放在头部
+        this.cache.addFirst(node)
+        this.map.set(key, node)
+      } else {
+        if (this.cache.size() === this.capacity) {
+          // 已满，删除最后一个
+          let node = this.cache.removeLast()
+          this.map.delete(node.key)
+        }
+        // 新增一个节点
+        this.map.set(key, node)
+        this.cache.addFirst(node)
+      }
+    }
+
+    let lru = new LRUCache(2)
+    lru.put(2, 1)
+    lru.put(2, 2)
+    console.log(lru.get(2))
+    lru.put(1, 1)
+    lru.put(4, 1)
+    console.log(lru.get(2))
+  </script>
+</body>
+</html>
