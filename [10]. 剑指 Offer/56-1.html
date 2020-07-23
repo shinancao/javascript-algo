@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>剑指 Offer</title>
+
+  <style>
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    div {
+      line-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>剑指 Offer 56 - I. 数组中数字出现的次数</h1>
+  <div><a href="https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/" target="_blank">题目入口</a></div>
+  <script>
+    var singleNumbers = function(nums) {
+      // 求所有数的异位运算结果
+      let res = 0
+      for(const k of nums) {
+        res ^= k
+      }
+      // 从右像左扫描，直到发现res的二进制数出现了1
+      let div = 1
+      while((div & res) === 0) {
+        div <<= 1
+      }
+      // 按照数组中的div位是0还是1，将数组划分成两组
+      let a = 0, b = 0
+      for(const k of nums) {
+        // 此处不能改为 (div & k) === 1，=== 的优先级要高于&
+        if (div & k) {
+          // 直接与分到的数异或，得出最终结果
+          a ^= k
+        } else {
+          b ^= k
+        }
+      }
+      return [a, b]
+    }
+    console.log(singleNumbers([1,2,10,4,1,4,3,3]))
+  </script>
+</body>
+</html>
